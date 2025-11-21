@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div>
-      <p>hi</p>
+      <a href="/authentication/">hi</a>
     </div>
   );
 }
