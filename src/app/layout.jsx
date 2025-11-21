@@ -5,6 +5,8 @@ export const metadata = {
   description: "Codefolio - Show off your GitHub repos",
 };
 
+
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
