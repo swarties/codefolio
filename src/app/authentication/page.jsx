@@ -1,17 +1,11 @@
-'use server';
-
-import { supabase } from "@/lib/supabaseClient";
+"use client";
 import { Button } from "@/components/ui/button";
+import loginHandler from "./loginHandler";
 
-const gitHubLoginHandler = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({provider : 'github'});
-    if (error) console.log(error.message) 
-}
-
-function ButtonOutline() {
-    return <Button variant="outline">Login</Button>
+function ButtonOutline({ onClick }) {
+    return <Button variant="outline" onClick={onClick}>Login</Button>
 }
 
 export default function Auth() {
-    return <ButtonOutline onClick={gitHubLoginHandler}></ButtonOutline>
+    return <ButtonOutline onClick={loginHandler} />
 }
