@@ -1,9 +1,10 @@
 import { supabase } from "@/lib/supabaseClient";
 const gitHubLoginHandler = async () => {
+  const redirectTo = `${window.location.origin}/authentication/callback`
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: "./callback"
+      redirectTo: redirectTo
     },
   });
   if (error) console.log(error.message);
