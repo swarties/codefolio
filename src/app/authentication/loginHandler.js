@@ -1,12 +1,12 @@
 import { supabase } from "@/lib/supabaseClient";
 const gitHubLoginHandler = async () => {
-  const { error } = await supabase.auth.signInWithOAuth({
+  const redirectTo = `${
+    typeof window !== "undefined" ? window.location.origin : ""
+  }/authentication/callback`;
+  await supabase.auth.signInWithOAuth({
     provider: "github",
-    options: {
-      redirectTo: "../"
-    },
+    options: { redirectTo },
   });
-  if (error) console.log(error.message);
 };
 
 export default async function loginHandler() {
