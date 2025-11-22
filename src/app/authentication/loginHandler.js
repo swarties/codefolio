@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabaseClient";
 const gitHubLoginHandler = async () => {
-  const redirectTo = `${window.location.origin}/authentication/`;
-  const { error } = await supabase.auth.signInWithOAuth({
+  const redirectTo = `${window.location.origin}/authentication/callback`;
+  const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
       redirectTo: redirectTo
@@ -16,6 +16,4 @@ export default async function loginHandler() {
   } catch (err) {
     console.error(err);
   }
-  const User = await supabase.auth.getUser();
-
 }
