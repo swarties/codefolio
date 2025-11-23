@@ -40,6 +40,8 @@ export default function CallbackPage() {
       console.error("error inserting into db", error.message);
       return;
     }
+
+    router.push("../../dashboard");
   }
 
   useEffect(() => {
@@ -50,8 +52,8 @@ export default function CallbackPage() {
 
   return (
     <>
-        <h1>Signing you in...</h1>
-        <p>woooooooooooo</p>
+      <h1>Signing you in...</h1>
+      <p>woooooooooooo</p>
     </>
   );
 }
