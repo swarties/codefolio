@@ -25,15 +25,33 @@ export default function CallbackPage() {
     getSession();
   }, [router]);
 
+  // console.log(sessionData);
+
+  async function insertUserRow(userData) {
+    const { data, error } = await supabase.from("profiles").insert([
+      {
+        github_id: userData.user_metadata.sub,
+        username: userData.user_metadata.name,
+        auth_user_id: userData.id,
+        avatar_url: userData.user_metadata.avatar_url,
+      },
+    ]);
+    if (error) {
+      console.error("error inserting into db", error.message);
+      return;
+    }
+  }
+
+  useEffect(() => {
+    if (sessionData?.user) {
+      insertUserRow(sessionData.user);
+    }
+  }, [sessionData]);
+
   return (
-    <div>
-      <h1>Signing you in...</h1>
-      <h1>OAuth Callback</h1>
-      {sessionData ? (
-        <pre>{JSON.stringify(sessionData, null, 2)}</pre>
-      ) : (
-        <p>Loading session data...</p>
-      )}
-    </div>
+    <>
+        <h1>Signing you in...</h1>
+        <p>woooooooooooo</p>
+    </>
   );
 }
