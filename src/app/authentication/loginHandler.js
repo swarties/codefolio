@@ -4,7 +4,7 @@ const gitHubLoginHandler = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: redirectTo
+      redirectTo: redirectTo,
     },
   });
   if (error) console.log(error.message);

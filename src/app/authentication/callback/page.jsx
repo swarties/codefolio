@@ -32,46 +32,40 @@ export default function CallbackPage() {
   // console.log(sessionData);
 
   useEffect(() => {
-  async function upsertUserRow(userData) {
-    console.log("[callback] upsert payload:", {
-      github_id: userData.user_metadata?.sub,
-      username: userData.user_metadata?.user_name,
-      auth_user_id: userData.id,
-      avatar_url: userData.user_metadata?.avatar_url,
-    });
-
-    const { error } = await supabase.from("profiles").upsert([
-      {
+    async function upsertUserRow(userData) {
+      console.log("[callback] upsert payload:", {
         github_id: userData.user_metadata?.sub,
         username: userData.user_metadata?.user_name,
         auth_user_id: userData.id,
         avatar_url: userData.user_metadata?.avatar_url,
-      },
-    ], { onConflict: 'github_id' });
-    if (error) {
-      console.error("error inserting/updating db row: ", error.message);
-      return;
+      });
+
+      const { error } = await supabase.from("profiles").upsert(
+        [
+          {
+            github_id: userData.user_metadata?.sub,
+            username: userData.user_metadata?.user_name,
+            auth_user_id: userData.id,
+            avatar_url: userData.user_metadata?.avatar_url,
+          },
+        ],
+        { onConflict: "github_id" }
+      );
+      if (error) {
+        console.error("error inserting/updating db row: ", error.message);
+        return;
+      }
+
+      router.push("../../dashboard");
     }
 
-    router.push("../../dashboard");
-  }
-
-  if (sessionData?.user) {
+    if (sessionData?.user) {
       upsertUserRow(sessionData.user);
     }
-
-})
+  });
   return (
-    <>
-      <div>
+    <div>
       <h1>Signing you in...</h1>
-      <h1>OAuth Callback</h1>
-      {sessionData ? (
-        <pre>{JSON.stringify(sessionData, null, 2)}</pre>
-      ) : (
-        <p>Loading session data...</p>
-      )}
     </div>
-    </>
   );
 }
