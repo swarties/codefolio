@@ -17,6 +17,10 @@ export default function CallbackPage() {
       }
       if (data.session) {
         setSessionData(data.session);
+        console.log("[callback] session loaded:", {
+          sessionUserId: data.session.user?.id,
+          userMetadata: data.session.user?.user_metadata,
+        });
       } else {
         router.push("../");
       }
@@ -27,13 +31,21 @@ export default function CallbackPage() {
 
   // console.log(sessionData);
 
-  async function insertUserRow(userData) {
-    const { data, error } = await supabase.from("profiles").upsert([
+  useEffect(() => {
+  async function upsertUserRow(userData) {
+    console.log("[callback] upsert payload:", {
+      github_id: userData.user_metadata?.sub,
+      username: userData.user_metadata?.user_name,
+      auth_user_id: userData.id,
+      avatar_url: userData.user_metadata?.avatar_url,
+    });
+
+    const { error } = await supabase.from("profiles").upsert([
       {
-        github_id: userData.user_metadata.sub,
-        username: userData.user_metadata.user_name,
+        github_id: userData.user_metadata?.sub,
+        username: userData.user_metadata?.user_name,
         auth_user_id: userData.id,
-        avatar_url: userData.user_metadata.avatar_url,
+        avatar_url: userData.user_metadata?.avatar_url,
       },
     ], { onConflict: 'github_id' });
     if (error) {
@@ -44,12 +56,11 @@ export default function CallbackPage() {
     router.push("../../dashboard");
   }
 
-  useEffect(() => {
-    if (sessionData?.user) {
-      insertUserRow(sessionData.user);
+  if (sessionData?.user) {
+      upsertUserRow(sessionData.user);
     }
-  }, [sessionData]);
 
+})
   return (
     <>
       <div>
