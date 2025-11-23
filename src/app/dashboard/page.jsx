@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import SignOut from "@/lib/signOut";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 function ButtonOutline({ onClick }) {
   return (
@@ -12,12 +12,6 @@ function ButtonOutline({ onClick }) {
   );
 }
 
-function SignUserOut() {
-  const RouterOut = useRouter();
-  SignOut();
-  RouterOut.push("../");
-}
-
 function SignOutButton() {
   const router = useRouter();
 
@@ -25,9 +19,16 @@ function SignOutButton() {
     await SignOut();
     router.push("../");
   }
-    return <button onClick={handleSignOut}>Sign Out</button>;
+  return <button onClick={handleSignOut}>Sign Out</button>;
 }
 
 export default function Auth() {
+  const RouterOut = useRouter();
+
+  function SignUserOut() {
+    SignOut();
+    RouterOut.push("../");
+  }
+
   return <ButtonOutline onClick={SignUserOut} />;
 }
