@@ -28,16 +28,16 @@ export default function CallbackPage() {
   // console.log(sessionData);
 
   async function insertUserRow(userData) {
-    const { data, error } = await supabase.from("profiles").insert([
+    const { data, error } = await supabase.from("profiles").upsert([
       {
         github_id: userData.user_metadata.sub,
-        username: userData.user_metadata.name,
+        username: userData.user_metadata.user_name,
         auth_user_id: userData.id,
         avatar_url: userData.user_metadata.avatar_url,
       },
-    ]);
+    ], { onConflict: 'github_id' });
     if (error) {
-      console.error("error inserting into db", error.message);
+      console.error("error inserting/updating db row: ", error.message);
       return;
     }
 
@@ -52,8 +52,15 @@ export default function CallbackPage() {
 
   return (
     <>
+      <div>
       <h1>Signing you in...</h1>
-      <p>woooooooooooo</p>
+      <h1>OAuth Callback</h1>
+      {sessionData ? (
+        <pre>{JSON.stringify(sessionData, null, 2)}</pre>
+      ) : (
+        <p>Loading session data...</p>
+      )}
+    </div>
     </>
   );
 }
