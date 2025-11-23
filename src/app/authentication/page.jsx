@@ -12,5 +12,11 @@ function ButtonOutline({ onClick }) {
 }
 
 export default function Auth() {
-  return <ButtonOutline onClick={loginHandler} />;
+  return (
+    <>
+      <p>Please sign in using the button bellow.</p>
+      <br />
+      <ButtonOutline onClick={loginHandler} />
+    </>
+  );
 }

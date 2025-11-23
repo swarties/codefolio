@@ -1,8 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import SignOut from "@/lib/signOut";
 import { useRouter } from "next/navigation";
+import CheckSignedIn from "@/lib/checkSession";
+import SignOut from "@/lib/signOut";
 
 function ButtonOutline({ onClick }) {
   return (
@@ -23,12 +24,24 @@ function SignOutButton() {
 }
 
 export default function Auth() {
-  const RouterOut = useRouter();
-
+  const router = useRouter();
   function SignUserOut() {
     SignOut();
-    RouterOut.push("../");
+    router.push("../");
   }
 
-  return <ButtonOutline onClick={SignUserOut} />;
+  const pageContent = (
+    <>
+      <ButtonOutline onClick={SignUserOut} />
+      <br />
+      <br />
+      <a href="../">Go home</a>
+    </>
+  );
+
+  return (
+    <>
+      <CheckSignedIn redirectTo="../authentication" pageContent={pageContent} />
+    </>
+  );
 }
