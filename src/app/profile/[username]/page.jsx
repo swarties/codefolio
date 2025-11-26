@@ -34,9 +34,10 @@ export default async function Page({ params }) {
   const userData = serverAns.data[0];
   console.log(userData); // github_id ; username ; bio ; bg_color ; avatar_url
 
-  return (
+  return (<>
     <div>
-      <p>{username}</p>
-    </div>
+      <p>{userData.username}</p>
+      <p>Bio : {userData.bio}</p>
+    </div></>
   );
 }
