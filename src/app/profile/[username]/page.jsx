@@ -1,4 +1,3 @@
-import fetchUserData from "./userDataFetcher";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
 export default async function Page({ params }) {
@@ -22,13 +21,18 @@ export default async function Page({ params }) {
     }
   }
 
-  const userInfo = await CheckUserandFetchData();
+  const serverAns = await CheckUserandFetchData();
 
-  if (!dUE) {
-    
+  if (!serverAns.dUE) {
+    return (
+      <>
+        <p>User Doesn&lsquo;t exit</p>
+      </>
+    );
   }
 
-  console.log(userInfo);
+  const userData = serverAns.data[0];
+  console.log(userData) // github_id ; username ; bio ; bg_color ; avatar_url
 
   return (
     <div>
