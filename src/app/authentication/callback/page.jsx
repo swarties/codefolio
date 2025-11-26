@@ -49,7 +49,7 @@ export default function CallbackPage() {
             avatar_url: userData.user_metadata?.avatar_url,
           },
         ],
-        { onConflict: "github_id" }
+        { onConflict: "github_id" },
       );
       if (error) {
         console.error("error inserting/updating db row: ", error.message);

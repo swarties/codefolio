@@ -32,7 +32,7 @@ export default async function Page({ params }) {
   }
 
   const userData = serverAns.data[0];
-  console.log(userData) // github_id ; username ; bio ; bg_color ; avatar_url
+  console.log(userData); // github_id ; username ; bio ; bg_color ; avatar_url
 
   return (
     <div>
@@ -40,31 +40,3 @@ export default async function Page({ params }) {
     </div>
   );
 }
-
-/* const pageUsername = await params;
-let doesUsernameExist = false;
-let userData = {};
-    (async () => {
-      let dUE = false;
-      const { data, error } = await supabaseAdmin
-        .from("profiles")
-        .select("*")
-        .eq("username", pageUsername);
-  
-      if (error) {
-        console.error(
-          "Error checking username in database:",
-          error.message || error
-        );
-        dUE = false;
-      }
-      
-      dUE = Array.isArray(data) && data.length > 0; //do this with an if to return either a value to if later for no username found page or a dataset
-      doesUsernameExist = dUE;
-  
-      if (doesUsernameExist) {
-          userData = data;
-      } else {
-          return false;
-      }
-  })(); */

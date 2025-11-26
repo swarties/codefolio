@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function CheckSignedIn({
-  redirectTo = "../app/authentication", pageContent
+  redirectTo = "../app/authentication",
+  pageContent,
 }) {
   const router = useRouter();
   const [verifState, setVerifState] = useState(true);
