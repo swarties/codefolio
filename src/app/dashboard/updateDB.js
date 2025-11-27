@@ -16,7 +16,7 @@ export default async function updateDB(formData) {
     return null;
   }
 
-  const { data, upsertError } = await supabase
+  const { data, error: updateError } = await supabase
     .from("profiles")
     .update({
       bio: newBio,
@@ -25,5 +25,9 @@ export default async function updateDB(formData) {
     .eq("auth_user_id", user.id)
     .select();
 
-    console.log(data)
+  if (updateError) {
+    console.error("error updating profile:", updateError.message || updateError);
+  } else {
+    console.log("updated profile:", data);
+  }
 }
