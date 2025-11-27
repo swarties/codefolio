@@ -2,7 +2,16 @@
 const nextConfig = {
   /* config options here */
   images: {
-    remotePatterns: [new URL("https://github.com/**")],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "github.com",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+    ],
   },
 
   reactCompiler: true,

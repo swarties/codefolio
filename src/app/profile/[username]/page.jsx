@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
 export default async function Page({ params }) {
@@ -38,6 +39,7 @@ export default async function Page({ params }) {
     <div>
       <p>{userData.username}</p>
       <p>Bio : {userData.bio}</p>
+      <Image src={userData.avatar_url} alt="User Avatar" width={100} height={100}></Image>
     </div></>
   );
 }

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import CheckSignedIn from "@/lib/checkSession";
 import SignOut from "@/lib/signOut";
+import Form from 'next/form';
 
 function ButtonOutline({ onClick }) {
   return (
@@ -30,12 +31,21 @@ export default function Auth() {
     router.push("../");
   }
 
+  async function updateDB(formData) {
+    'use server';
+    console.log(formData)
+    //...
+  }
+
   const pageContent = (
     <>
       <ButtonOutline onClick={SignUserOut} />
       <br />
       <br />
       <a href="../">Go home</a>
+      <Form action={updateDB()}>
+        <input type="color" name="Color" id="" />
+      </Form>
     </>
   );
 
