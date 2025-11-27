@@ -16,9 +16,14 @@ export default async function updateDB(formData) {
     return null;
   }
 
-  const { data, fetcherror } = await supabase
+  const { data, upsertError } = await supabase
     .from("profiles")
-    .select("*")
+    .update({
+      bio: newBio,
+      bg_color: newBgColor,
+    })
     .eq("auth_user_id", user.id)
-    .single();
+    .select();
+
+    console.log(data)
 }
