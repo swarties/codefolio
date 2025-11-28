@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import CheckSignedIn from "@/lib/checkSession";
 import SignOut from "@/lib/signOut";
-import Form from 'next/form';
+import Form from "next/form";
+import React from "react";
+import userForm from "./userForm";
 import { supabase } from "@/lib/supabaseClient";
 
 function ButtonOutline({ onClick }) {
@@ -26,6 +28,23 @@ function SignOutButton() {
   return <button onClick={handleSignOut}>Sign Out</button>;
 }
 
+function ProfileForm() {
+
+  useEffect(() => {
+    
+  }, []);
+
+  return (
+    <Form action={userForm} >
+      <input type="color" name="bgColor" id="bgColor" />
+      <input type="text" name="bio" id="bio" />
+      <button type="submit">
+        Submit
+      </button>
+    </Form>
+  );
+}
+
 export default function Auth() {
   const router = useRouter();
   function SignUserOut() {
@@ -39,6 +58,7 @@ export default function Auth() {
       <br />
       <br />
       <a href="../">Go home</a>
+      <ProfileForm></ProfileForm>
     </>
   );
 
