@@ -8,7 +8,6 @@ import SignOut from "@/lib/signOut";
 import Form from "next/form";
 import React from "react";
 import userForm from "./userForm";
-import { supabase } from "@/lib/supabaseClient";
 
 function ButtonOutline({ onClick }) {
   return (

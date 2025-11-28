@@ -1,4 +1,7 @@
-import { supabase } from "@/lib/supabaseClient";
+import { createClient } from "@/lib/supabase/client";
+
+const supabase = createClient();
+
 const gitHubLoginHandler = async () => {
   const redirectTo = `${window.location.origin}/authentication/callback`;
   const { data, error } = await supabase.auth.signInWithOAuth({

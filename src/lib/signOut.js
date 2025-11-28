@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "./supabase/client";
 import Router from "next/router";
 
 export default async function SignOut() {
