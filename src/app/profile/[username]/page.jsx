@@ -1,6 +1,16 @@
 import Image from "next/image";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
+async function Repos(repo_option) {
+  const repoOption = repo_option.repo_option;
+  if (repoOption) {
+    // latest 5 repos
+    return <p>oh...</p>;
+  }
+  // top 5 starred repos
+  return <p>Ah...</p>;
+}
+
 export default async function Page({ params }) {
   const { username } = await params;
   async function CheckUserandFetchData() {
@@ -33,13 +43,23 @@ export default async function Page({ params }) {
   }
 
   const userData = serverAns.data[0];
-  console.log(userData); // github_id ; username ; bio ; bg_color ; avatar_url ; repo_option
+  //console.log(userData); github_id ; username ; bio ; bg_color ; avatar_url ; repo_option
 
-  return (<>
-    <div>
-      <p>{userData.username}</p>
-      <p>Bio : {userData.bio}</p>
-      <Image src={userData.avatar_url} alt="User Avatar" width={100} height={100}></Image>
-    </div></>
+  const repoOption = userData.repo_option;
+
+  return (
+    <>
+      <div>
+        <p>{userData.username}</p>
+        <p>Bio : {userData.bio}</p>
+        <Image
+          src={userData.avatar_url}
+          alt="User Avatar"
+          width={100}
+          height={100}
+        ></Image>
+        <Repos repo_option={repoOption}></Repos>
+      </div>
+    </>
   );
 }
