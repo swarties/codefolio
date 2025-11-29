@@ -55,25 +55,46 @@ function ProfileForm() {
     fetchData();
   }, []);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (formDataObj) => {
+    await userForm(formDataObj);
+
+    console.log("submit update was successful");
+  };
+
   if (isLoading) {
     return <p>Form is loading...</p>;
   }
 
   return (
-    <Form action={userForm}>
+    <Form action={handleSubmit}>
       <label htmlFor="bgColor">Background Color</label>
       <br />
       <input
         type="color"
         name="bgColor"
         id="bgColor"
-        defaultValue={formData.bgColor}
+        value={formData.bgColor}
+        onChange={handleChange}
       />
       <br />
 
       <label htmlFor="bio">Bio</label>
       <br />
-      <input type="text" name="bio" id="bio" defaultValue={formData.bio} />
+      <input
+        type="text"
+        name="bio"
+        id="bio"
+        value={formData.bio}
+        onChange={handleChange}
+      />
       <br />
 
       <button type="submit">Submit</button>
