@@ -28,18 +28,55 @@ function SignOutButton() {
 }
 
 function ProfileForm() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [formData, setFormData] = useState({
+    bgColor: "#363636",
+    bio: "",
+  });
 
-/*   useEffect(() => {
-    
-  }, []); */
-  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await initData();
+
+        if (data) {
+          setFormData({
+            bgColor: data.bg_color || "#363636",
+            bio: data.bio || "",
+          });
+        }
+      } catch (error) {
+        console.error("Error loading profile data", error);
+      }
+
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return <p>Form is loading...</p>;
+  }
+
   return (
-    <Form action={userForm} >
-      <input type="color" name="bgColor" id="bgColor" />
-      <input type="text" name="bio" id="bio" />
-      <button type="submit">
-        Submit
-      </button>
+    <Form action={userForm}>
+      <label htmlFor="bgColor">Background Color</label>
+      <br />
+      <input
+        type="color"
+        name="bgColor"
+        id="bgColor"
+        defaultValue={formData.bgColor}
+      />
+      <br />
+
+      <label htmlFor="bio">Bio</label>
+      <br />
+      <input type="text" name="bio" id="bio" defaultValue={formData.bio} />
+      <br />
+
+      <button type="submit">Submit</button>
     </Form>
   );
 }
