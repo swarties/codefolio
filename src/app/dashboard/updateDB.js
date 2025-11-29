@@ -5,7 +5,7 @@ import GetUser from "./getUser";
 export default async function updateDB(userFormData) {
   const newBgColor = userFormData.bgColor;
   const newBio = userFormData.bio;
-  const newRepoOption = userFormData.repo_option;
+  const newRepoOption = userFormData.repo_option === "true" || userFormData.repo_option === true;
 
   const [user, userid] = await GetUser();
 
@@ -14,7 +14,6 @@ export default async function updateDB(userFormData) {
     return;
   }
 
-  console.log([user, userid]);
 
   const { error } = await supabaseAdmin
     .from("profiles")

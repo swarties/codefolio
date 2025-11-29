@@ -31,6 +31,6 @@ export async function initData() {
     console.error("error fetching user data:", error.message || error);
     throw error;
   }
-
+  
   return profile;
 }

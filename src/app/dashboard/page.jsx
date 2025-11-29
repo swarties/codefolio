@@ -21,18 +21,20 @@ function ProfileForm() {
   const [formData, setFormData] = useState({
     bgColor: "#363636",
     bio: "",
+    repo_option: "true",
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await initData();
+        console.log("Fetched data:", data);
 
         if (data) {
           setFormData({
             bgColor: data.bg_color || "#363636",
             bio: data.bio || "",
-            repo_option: data.repo_option ?? true
+            repo_option: data.repo_option === true ? "true" : "false",
           });
         }
       } catch (error) {
@@ -49,7 +51,7 @@ function ProfileForm() {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "repo_option" ? value === "true" : value,
+      [name]: value,
     }));
   };
 
@@ -57,6 +59,8 @@ function ProfileForm() {
     await userForm(formDataObj);
 
     console.log("submit update was successful");
+
+    
   };
 
   if (isLoading) {
@@ -88,7 +92,12 @@ function ProfileForm() {
       <br />
       <label htmlFor="repo_option">Displayed repositories</label>
       <br />
-      <select name="repo_option" id="repo_option" onChange={handleChange} value={String(formData.repo_option)}>
+      <select
+        name="repo_option"
+        id="repo_option"
+        value={formData.repo_option}
+        onChange={handleChange}
+      >
         <option value="true">5 latest repositories</option>
         <option value="false">5 most starred repositories</option>
       </select>
