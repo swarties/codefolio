@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import CheckSignedIn from "@/lib/checkSession";
 import SignOut from "@/lib/signOut";
 import Form from "next/form";
-import React from "react";
 import userForm, { initData } from "./userForm";
 
 function ButtonOutline({ onClick }) {
@@ -15,16 +14,6 @@ function ButtonOutline({ onClick }) {
       Sign Out
     </Button>
   );
-}
-
-function SignOutButton() {
-  const router = useRouter();
-
-  async function handleSignOut() {
-    await SignOut();
-    router.push("../");
-  }
-  return <button onClick={handleSignOut}>Sign Out</button>;
 }
 
 function ProfileForm() {
