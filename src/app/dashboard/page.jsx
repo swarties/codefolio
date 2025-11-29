@@ -32,7 +32,7 @@ function ProfileForm() {
 /*   useEffect(() => {
     
   }, []); */
-
+  
   return (
     <Form action={userForm} >
       <input type="color" name="bgColor" id="bgColor" />
