@@ -21,6 +21,7 @@ export async function GET(request) {
             username: user_metadata?.user_name,
             auth_user_id: user.id,
             avatar_url: user_metadata?.avatar_url,
+            repo_option: true,
           },
         ],
         { onConflict: "github_id" }

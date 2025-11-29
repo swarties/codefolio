@@ -43,6 +43,7 @@ function ProfileForm() {
           setFormData({
             bgColor: data.bg_color || "#363636",
             bio: data.bio || "",
+            repo_option: data.repo_option ?? true
           });
         }
       } catch (error) {
@@ -59,7 +60,7 @@ function ProfileForm() {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: name === "repo_option" ? value === "true" : value,
     }));
   };
 
@@ -96,7 +97,13 @@ function ProfileForm() {
         onChange={handleChange}
       />
       <br />
-
+      <label htmlFor="repo_option">Displayed repositories</label>
+      <br />
+      <select name="repo_option" id="repo_option" onChange={handleChange} value={String(formData.repo_option)}>
+        <option value="true">5 latest repositories</option>
+        <option value="false">5 most starred repositories</option>
+      </select>
+      <br />
       <button type="submit">Submit</button>
     </Form>
   );

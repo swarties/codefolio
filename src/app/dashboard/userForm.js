@@ -8,6 +8,7 @@ export default async function userForm(formData) {
   const rawFormData = {
     bgColor: await formData.get("bgColor"),
     bio: await formData.get("bio"),
+    repo_option: await formData.get("repo_option"),
   };
 
   await updateDB(rawFormData);
@@ -16,7 +17,7 @@ export default async function userForm(formData) {
 export async function initData() {
   const supabase = await createClient();
 
-  const [ user, user_id ] = await GetUser();
+  const [user, user_id] = await GetUser();
 
   if (!user_id) return null;
 

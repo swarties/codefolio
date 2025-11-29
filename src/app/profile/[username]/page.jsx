@@ -33,7 +33,7 @@ export default async function Page({ params }) {
   }
 
   const userData = serverAns.data[0];
-  console.log(userData); // github_id ; username ; bio ; bg_color ; avatar_url
+  console.log(userData); // github_id ; username ; bio ; bg_color ; avatar_url ; repo_option
 
   return (<>
     <div>
