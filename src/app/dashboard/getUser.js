@@ -1,9 +1,9 @@
 "use server";
   
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function GetUser() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
     error: usererror,
