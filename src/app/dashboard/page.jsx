@@ -7,7 +7,7 @@ import CheckSignedIn from "@/lib/checkSession";
 import SignOut from "@/lib/signOut";
 import Form from "next/form";
 import React from "react";
-import userForm from "./userForm";
+import userForm, { initData } from "./userForm";
 
 function ButtonOutline({ onClick }) {
   return (
@@ -29,9 +29,9 @@ function SignOutButton() {
 
 function ProfileForm() {
 
-  useEffect(() => {
+/*   useEffect(() => {
     
-  }, []);
+  }, []); */
 
   return (
     <Form action={userForm} >
