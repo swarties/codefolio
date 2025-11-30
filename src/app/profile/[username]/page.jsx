@@ -3,12 +3,13 @@ import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import { starGetter, lastGetter } from "./repoGetter";
 import { Suspense } from "react";
 
-function Repos({ repo_option, uID }) {
+async function Repos({ repo_option, uID }) {
   const repoOption = repo_option;
   const user_id = uID;
   console.log(user_id);
 
-  console.log(lastGetter(user_id))
+  const objectTest = await lastGetter(user_id);
+  console.log(objectTest);
 
   if (repoOption) {
     // latest 5 repos
@@ -40,7 +41,7 @@ async function CheckUserandFetchData(username) {
 export default async function Page({ params }) {
   const { username } = await params;
   const serverAns = await CheckUserandFetchData(username);
-  const userID = serverAns.data[0].github_id;
+  const userID = await serverAns.data[0].github_id;
 
   if (!serverAns.dUE) {
     return (
