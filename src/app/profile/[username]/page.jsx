@@ -6,17 +6,25 @@ import { Suspense } from "react";
 async function Repos({ repo_option, uID }) {
   const repoOption = repo_option;
   const user_id = uID;
-  console.log(user_id);
 
-  const objectTest = await lastGetter(user_id);
-  console.log(objectTest);
+  var repos;
 
   if (repoOption) {
     // latest 5 repos
-    return <p>oh...</p>;
+
+    repos = await lastGetter(user_id);
+  } else {
+    // top 5 starred repos
+
+    repos = await starGetter(user_id);
   }
-  // top 5 starred repos
-  return <p>Ah...</p>;
+  // display logic here with the var repos
+
+  return (
+    <>
+      <p>Repos</p>
+    </>
+  );
 }
 
 async function CheckUserandFetchData(username) {
@@ -41,7 +49,8 @@ async function CheckUserandFetchData(username) {
 export default async function Page({ params }) {
   const { username } = await params;
   const serverAns = await CheckUserandFetchData(username);
-  const userID = await serverAns.data[0].github_id;
+  const serverData = await serverAns.data[0];
+  const userID = serverData.github_id;
 
   if (!serverAns.dUE) {
     return (
@@ -67,7 +76,13 @@ export default async function Page({ params }) {
           width={100}
           height={100}
         ></Image>
-        <Suspense fallback={<><p>Loading repos</p></>}>
+        <Suspense
+          fallback={
+            <>
+              <p>Loading repos</p>
+            </>
+          }
+        >
           <Repos repo_option={repoOption} uID={userID}></Repos>
         </Suspense>
       </div>
