@@ -1,8 +1,15 @@
 import Image from "next/image";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
+import { starGetter, lastGetter } from "./repoGetter";
+import { Suspense } from "react";
 
-async function Repos(repo_option) {
-  const repoOption = repo_option.repo_option;
+function Repos({ repo_option, uID }) {
+  const repoOption = repo_option;
+  const user_id = uID;
+  console.log(user_id);
+
+  console.log(lastGetter(user_id))
+
   if (repoOption) {
     // latest 5 repos
     return <p>oh...</p>;
@@ -11,28 +18,29 @@ async function Repos(repo_option) {
   return <p>Ah...</p>;
 }
 
+async function CheckUserandFetchData(username) {
+  let dUE = false;
+  const { data, error } = await supabaseAdmin
+    .from("profiles")
+    .select("*")
+    .eq("username", username);
+
+  if (error) {
+    console.log("Error contacting database:", error.message || error);
+    return { dUE, data: "nodata" };
+  }
+  if (Array.isArray(data) && data.length > 0) {
+    dUE = true;
+    return { dUE, data };
+  } else {
+    return { dUE, data };
+  }
+}
+
 export default async function Page({ params }) {
   const { username } = await params;
-  async function CheckUserandFetchData() {
-    let dUE = false;
-    const { data, error } = await supabaseAdmin
-      .from("profiles")
-      .select("*")
-      .eq("username", username);
-
-    if (error) {
-      console.log("Error contacting database:", error.message || error);
-      return { dUE, data: "nodata" };
-    }
-    if (Array.isArray(data) && data.length > 0) {
-      dUE = true;
-      return { dUE, data };
-    } else {
-      return { dUE, data };
-    }
-  }
-
-  const serverAns = await CheckUserandFetchData();
+  const serverAns = await CheckUserandFetchData(username);
+  const userID = serverAns.data[0].github_id;
 
   if (!serverAns.dUE) {
     return (
@@ -58,7 +66,9 @@ export default async function Page({ params }) {
           width={100}
           height={100}
         ></Image>
-        <Repos repo_option={repoOption}></Repos>
+        <Suspense fallback={<><p>Loading repos</p></>}>
+          <Repos repo_option={repoOption} uID={userID}></Repos>
+        </Suspense>
       </div>
     </>
   );
