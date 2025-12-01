@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import CheckSignedIn from "@/lib/checkSession";
 import SignOut from "@/lib/signOut";
-import Form from "next/form";
 import userForm, { initData } from "./userForm";
 
 function ButtonOutline({ onClick }) {
@@ -18,25 +17,29 @@ function ButtonOutline({ onClick }) {
 
 function ProfileForm() {
   const [isLoading, setIsLoading] = useState(true);
+  const [hasFetched, setHasFetched] = useState(false);
   const [formData, setFormData] = useState({
     bgColor: "#363636",
     bio: "",
-    repo_option: "true",
+    repo_option: "last",
   });
 
   useEffect(() => {
+    if (hasFetched) return;
+
     const fetchData = async () => {
       try {
         const data = await initData();
-        console.log("Fetched data:", data);
+        // console.log("Fetched data:", data);
 
         if (data) {
           setFormData({
             bgColor: data.bg_color || "#363636",
             bio: data.bio || "",
-            repo_option: data.repo_option === true ? "true" : "false",
+            repo_option: data.repo_option ? "last" : "star",
           });
         }
+        setHasFetched(true);
       } catch (error) {
         console.error("Error loading profile data", error);
       }
@@ -45,7 +48,7 @@ function ProfileForm() {
     };
 
     fetchData();
-  }, []);
+  }, [hasFetched]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,12 +58,11 @@ function ProfileForm() {
     }));
   };
 
-  const handleSubmit = async (formDataObj) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formDataObj = new FormData(e.target);
     await userForm(formDataObj);
-
     console.log("submit update was successful");
-
-    
   };
 
   if (isLoading) {
@@ -68,7 +70,7 @@ function ProfileForm() {
   }
 
   return (
-    <Form action={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <label htmlFor="bgColor">Background Color</label>
       <br />
       <input
@@ -90,20 +92,33 @@ function ProfileForm() {
         onChange={handleChange}
       />
       <br />
-      <label htmlFor="repo_option">Displayed repositories</label>
-      <br />
-      <select
-        name="repo_option"
-        id="repo_option"
-        value={formData.repo_option}
-        onChange={handleChange}
-      >
-        <option value="true">5 latest repositories</option>
-        <option value="false">5 most starred repositories</option>
-      </select>
+      <fieldset>
+        <legend>Displayed repositories</legend>
+        <label>
+          <input
+            type="radio"
+            name="repo_option"
+            value="last"
+            checked={formData.repo_option === "last"}
+            onChange={handleChange}
+          />
+          5 latest repositories
+        </label>
+        <br />
+        <label>
+          <input
+            type="radio"
+            name="repo_option"
+            value="star"
+            checked={formData.repo_option === "star"}
+            onChange={handleChange}
+          />
+          5 most starred repositories
+        </label>
+      </fieldset>
       <br />
       <button type="submit">Submit</button>
-    </Form>
+    </form>
   );
 }
 
