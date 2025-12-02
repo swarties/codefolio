@@ -8,6 +8,8 @@ async function Repos({ repo_option, uID }) {
   const repoOption = repo_option;
   const user_id = uID;
 
+  if (!user_id) return;
+
   var repos;
   var text;
 
@@ -64,7 +66,7 @@ async function CheckUserandFetchData(username) {
 export default async function Page({ params }) {
   const { username } = await params;
   const serverAns = await CheckUserandFetchData(username);
-  const serverData = await serverAns.data[0];
+  const serverData = (serverAns.dUE) ? await serverAns.data[0] : {github_id: false};
   const userID = serverData.github_id;
 
   if (!serverAns.dUE) {
@@ -91,6 +93,7 @@ export default async function Page({ params }) {
           width={100}
           height={100}
         ></Image>
+
         <Suspense
           fallback={
             <>
