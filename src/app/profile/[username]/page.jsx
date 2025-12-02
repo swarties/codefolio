@@ -2,28 +2,43 @@ import Image from "next/image";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import { starGetter, lastGetter } from "./repoGetter";
 import { Suspense } from "react";
+import React from "react";
 
 async function Repos({ repo_option, uID }) {
   const repoOption = repo_option;
   const user_id = uID;
 
   var repos;
+  var text;
 
   if (repoOption) {
     // latest 5 repos
-
+    text = "5 latest repositories"
     repos = await lastGetter(user_id);
   } else {
     // top 5 starred repos
-
+    text = "5 most starred repositories"
     repos = await starGetter(user_id);
   }
   // display logic here with the var repos
 
   return (
-    <>
-      <p>Repos</p>
-    </>
+    <ul>
+      <br />
+      <h1 style={{fontSize:"25px"}}>{text}</h1>
+      <br />
+      <hr />
+      {repos.map((repo, index) => (
+        <li key={index}>
+          <a href={repo[2]} target="_blank" rel="noopener noreferrer">
+            {repo[0]}
+          </a>
+          <p>{repo[1]}</p>
+          <br></br>
+          <hr ></hr>
+        </li>
+      ))}
+    </ul>
   );
 }
 
