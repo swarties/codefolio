@@ -116,22 +116,15 @@ export default async function Page({ params }) {
     >
       <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-start md:items-center">
         {/* Left Column: Profile Info */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left">
+        <div className="flex flex-col items-center md:items-start text-center md:text-left md:justify-center">
           
           <Image
             src={userData.avatar_url}
             alt="User Avatar"
             width={200}
             height={200}
-            sizes=""
-            style={{
-              borderRadius: "50%",
-              borderWidth: "1px",
-              borderColor: "black",
-              borderStyle: "solid",
-              backgroundColor: "white",
-            }}
-            className="mb-6"
+            className="mb-6 w-[100px] h-[100px] md:w-[200px] md:h-[200px] rounded-full border border-black bg-white object-cover"
+            sizes="(max-width: 768px) 100px, 200px"
           />
           <p className="text-[32px] md:text-[54px] font-bold mb-4">
             {userData.username}
