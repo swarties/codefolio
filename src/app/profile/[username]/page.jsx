@@ -110,53 +110,82 @@ export default async function Page({ params }) {
   return (
     <>
       <div
+        className="min-h-screen "
         style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
           backgroundColor: userData.bg_color,
-          height: "100vh",
         }}
       >
-        <div className="block md:grid md:grid-cols-[100px_1fr] md:items-center ">
-          <Image
-            src={userData.avatar_url}
-            alt="User Avatar"
-            width={100}
-            height={100}
-            style={{
-              borderRadius: "50%",
-              borderWidth: "1px",
-              borderColor: "black",
-              borderStyle: "solid",
-              backgroundColor: "white",
-            }}
-            className="mt-[2em] md:mt-0 md:justify-self-center"
-          ></Image>
-          <p
-            style={{}}
-            className="mb-[1em] md:self-center md:mt-[2en] md:mb-0 md:justify-self-center md:text-[42px] md:ml-[0.5em]"
-          >
-            {userData.username}
-          </p>
-        </div>
-        {userData.bio === "" ? null : (
-          <div>
-            {/* <p>Bio :</p> // will probably encadre this*/}
-            <p> {userData.bio}</p>
-          </div>
-        )}
-
-        <Suspense
-          fallback={
-            <>
-              <p>Loading repos</p>
-            </>
-          }
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh", //implement with theming later
+          }}
         >
-          <Repos repo_option={repoOption} uID={userID}></Repos>
-        </Suspense>
+          <div className="md:grid md:grid-cols-[1fr_1fr] md:content-center">
+            <div
+              className="
+        
+        grid items:center
+        md:grid md:grid-cols-[100px_1fr] md:items-center 
+        
+        "
+            >
+              <div>
+              <Image
+                src={userData.avatar_url}
+                alt="User Avatar"
+                width={100}
+                height={100}
+                style={{
+                  borderRadius: "50%",
+                  borderWidth: "1px",
+                  borderColor: "black",
+                  borderStyle: "solid",
+                  backgroundColor: "white",
+                }}
+                className="
+            
+            justify-self-center
+            mt-[1.25em] md:mt-0 md:justify-self-center
+            "
+              ></Image>
+              <p
+                style={{}}
+                className="
+            
+            mb-[0.75em] mt-[0.25em] justify-self-center text-[32px]
+            md:self-center md:mt-[2en] md:mb-0 md:justify-self-center md:text-[54px] md:ml-[0.25em]
+            "
+              >
+                {userData.username}
+              </p>
+            </div>
+            {userData.bio === "" ? null : (
+              <div>
+                {/* <p>Bio :</p> // will probably encadre this*/}
+                <p> {userData.bio}</p>
+              </div>
+            )}
+
+              </div>
+          </div>
+          <div>
+          <div>
+            <Suspense
+              fallback={
+                <>
+                  <p>Loading repos</p>
+                </>
+              }
+            >
+              <Repos repo_option={repoOption} uID={userID}></Repos>
+            </Suspense>
+          </div>
+          </div>
+        </div>
       </div>
     </>
   );
