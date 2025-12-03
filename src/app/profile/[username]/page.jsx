@@ -114,9 +114,14 @@ export default async function Page({ params }) {
         backgroundColor: userData.bg_color,
       }}
     >
-      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-start md:items-center">
+      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-start md:items-center
+      
+      bg-[linear-gradient(to_top,#232526,#2b2d2e)] rounded-md p-[2em] text-white border-[#a8afb5] border-solid border-2 [box-shadow:0_0_6px_#a8afb5] "
+       // bg-[linear-gradient(to_top,#232526,#2b2d2e)] rounded-md p-[2em] text-white border-[#a8afb5] border-solid border-2 [box-shadow:0_0_6px_#a8afb5] darkmode
+       // bg-[linear-gradient(90deg,rgba(121,130,133,1)_0%,rgba(204,203,177,1)_100%)] rounded-lg p-[2em] text-black border-[#3f4042] border-solid border-2 [box-shadow:0_0_8px_#353738] lightmode
+      >
         {/* Left Column: Profile Info */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left md:justify-center">
+        <div className="flex flex-col items-center text-center md:text-center md:justify-center md:items-center">
           
           <Image
             src={userData.avatar_url}
@@ -130,7 +135,7 @@ export default async function Page({ params }) {
             {userData.username}
           </p>
           {userData.bio && (
-            <div className="text-lg max-w-md">
+            <div className="text-lg max-w-md wrap-break-word">
               <p>{userData.bio}</p>
             </div>
           )}
