@@ -32,8 +32,30 @@ async function Repos({ repo_option, uID }) {
       {repos.map((repo, index) => (
         <div key={index}>
           <p key={index}>
-            <a href={repo[2]} target="_blank" rel="noopener noreferrer">
+            <a
+              href={repo[2]}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "inline" }}
+            >
               {repo[0]}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={16}
+                height={16}
+                fill="currentColor"
+                className="bi bi-box-arrow-up-right"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"
+                />
+                <path
+                  fillRule="evenodd"
+                  d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"
+                />
+              </svg>
             </a>
           </p>
           <p>{repo[1]}</p>
@@ -97,21 +119,28 @@ export default async function Page({ params }) {
           height: "100vh",
         }}
       >
-        <Image
-          src={userData.avatar_url}
-          alt="User Avatar"
-          width={100}
-          height={100}
-          style={{
-            borderRadius: "50%",
-            marginTop: "2em",
-            borderWidth: "1px",
-            borderColor: "black",
-            borderStyle: "solid",
-            backgroundColor: "white",
-          }}
-        ></Image>
-        <p style={{ marginBottom: "1em" }}>{userData.username}</p>
+        <div className="block md:grid md:grid-cols-[100px_1fr] md:items-center ">
+          <Image
+            src={userData.avatar_url}
+            alt="User Avatar"
+            width={100}
+            height={100}
+            style={{
+              borderRadius: "50%",
+              borderWidth: "1px",
+              borderColor: "black",
+              borderStyle: "solid",
+              backgroundColor: "white",
+            }}
+            className="mt-[2em] md:mt-0 md:justify-self-center"
+          ></Image>
+          <p
+            style={{}}
+            className="mb-[1em] md:self-center md:mt-[2en] md:mb-0 md:justify-self-center md:text-[42px] md:ml-[0.5em]"
+          >
+            {userData.username}
+          </p>
+        </div>
         {userData.bio === "" ? null : (
           <div>
             {/* <p>Bio :</p> // will probably encadre this*/}
