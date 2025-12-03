@@ -26,7 +26,7 @@ async function Repos({ repo_option, uID }) {
 
   return (
     <ul>
-      <h1 style={{ fontSize: "25px" }}>{text}</h1>
+      <h1 className="text-[22px] md:text-[26px]">{text}</h1>
       <br />
       <hr />
       {repos.map((repo, index) => (
@@ -108,85 +108,54 @@ export default async function Page({ params }) {
   const repoOption = userData.repo_option;
 
   return (
-    <>
-      <div
-        className="min-h-screen "
-        style={{
-          backgroundColor: userData.bg_color,
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh", //implement with theming later
-          }}
-        >
-          <div className="md:grid md:grid-cols-[1fr_1fr] md:content-center">
-            <div
-              className="
-        
-        grid items:center
-        md:grid md:grid-cols-[100px_1fr] md:items-center 
-        
-        "
-            >
-              <div>
-              <Image
-                src={userData.avatar_url}
-                alt="User Avatar"
-                width={100}
-                height={100}
-                style={{
-                  borderRadius: "50%",
-                  borderWidth: "1px",
-                  borderColor: "black",
-                  borderStyle: "solid",
-                  backgroundColor: "white",
-                }}
-                className="
-            
-            justify-self-center
-            mt-[1.25em] md:mt-0 md:justify-self-center
-            "
-              ></Image>
-              <p
-                style={{}}
-                className="
-            
-            mb-[0.75em] mt-[0.25em] justify-self-center text-[32px]
-            md:self-center md:mt-[2en] md:mb-0 md:justify-self-center md:text-[54px] md:ml-[0.25em]
-            "
-              >
-                {userData.username}
-              </p>
+    <div
+      className="min-h-screen flex items-center justify-center p-8"
+      style={{
+        backgroundColor: userData.bg_color,
+      }}
+    >
+      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-start md:items-center">
+        {/* Left Column: Profile Info */}
+        <div className="flex flex-col items-center md:items-start text-center md:text-left">
+          
+          <Image
+            src={userData.avatar_url}
+            alt="User Avatar"
+            width={200}
+            height={200}
+            sizes=""
+            style={{
+              borderRadius: "50%",
+              borderWidth: "1px",
+              borderColor: "black",
+              borderStyle: "solid",
+              backgroundColor: "white",
+            }}
+            className="mb-6"
+          />
+          <p className="text-[32px] md:text-[54px] font-bold mb-4">
+            {userData.username}
+          </p>
+          {userData.bio && (
+            <div className="text-lg max-w-md">
+              <p>{userData.bio}</p>
             </div>
-            {userData.bio === "" ? null : (
-              <div>
-                {/* <p>Bio :</p> // will probably encadre this*/}
-                <p> {userData.bio}</p>
-              </div>
-            )}
+          )}
+        </div>
 
-              </div>
-          </div>
-          <div>
-          <div>
-            <Suspense
-              fallback={
-                <>
-                  <p>Loading repos</p>
-                </>
-              }
-            >
-              <Repos repo_option={repoOption} uID={userID}></Repos>
-            </Suspense>
-          </div>
-          </div>
+        {/* Right Column: Repositories */}
+        <div className="w-full">
+          <Suspense
+            fallback={
+              <>
+                <p>Loading repos</p>
+              </>
+            }
+          >
+            <Repos repo_option={repoOption} uID={userID}></Repos>
+          </Suspense>
         </div>
       </div>
-    </>
+    </div>
   );
 }
