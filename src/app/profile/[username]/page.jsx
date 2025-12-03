@@ -15,11 +15,11 @@ async function Repos({ repo_option, uID }) {
 
   if (repoOption) {
     // latest 5 repos
-    text = "5 latest repositories";
+    text = "Top 5 latest repositories :";
     repos = await lastGetter(user_id);
   } else {
     // top 5 starred repos
-    text = "5 most starred repositories";
+    text = "Top 5 starred repositories :";
     repos = await starGetter(user_id);
   }
   // display logic here with the var repos
@@ -27,16 +27,19 @@ async function Repos({ repo_option, uID }) {
   return (
     <ul>
       <h1 style={{ fontSize: "25px" }}>{text}</h1>
+      <br />
       <hr />
       {repos.map((repo, index) => (
-        <li key={index}>
-          <a href={repo[2]} target="_blank" rel="noopener noreferrer">
-            {repo[0]}
-          </a>
+        <div key={index}>
+          <p key={index}>
+            <a href={repo[2]} target="_blank" rel="noopener noreferrer">
+              {repo[0]}
+            </a>
+          </p>
           <p>{repo[1]}</p>
           <br></br>
           <hr></hr>
-        </li>
+        </div>
       ))}
     </ul>
   );
@@ -90,6 +93,8 @@ export default async function Page({ params }) {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          backgroundColor: userData.bg_color,
+          height: "100vh",
         }}
       >
         <Image
@@ -103,10 +108,16 @@ export default async function Page({ params }) {
             borderWidth: "1px",
             borderColor: "black",
             borderStyle: "solid",
+            backgroundColor: "white",
           }}
         ></Image>
-        <p style={{marginBottom:"1em"}}>{userData.username}</p>
-        <p>Bio : {userData.bio}</p>
+        <p style={{ marginBottom: "1em" }}>{userData.username}</p>
+        {userData.bio === "" ? null : (
+          <div>
+            {/* <p>Bio :</p> // will probably encadre this*/}
+            <p> {userData.bio}</p>
+          </div>
+        )}
 
         <Suspense
           fallback={
