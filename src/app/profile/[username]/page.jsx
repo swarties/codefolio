@@ -2,6 +2,7 @@ import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import { starGetter, lastGetter } from "./repoGetter";
 import ProfileClient from "./ProfileClient";
 import React from "react";
+import Link from "next/link";
 
 async function CheckUserandFetchData(username) {
   let dUE = false;
@@ -32,9 +33,16 @@ export default async function Page({ params }) {
 
   if (!serverAns.dUE) {
     return (
-      <>
-        <p>User Doesn&lsquo;t exit</p>
-      </>
+      <div className="flex flex-col h-full items-center justify-center bg-black text-white gap-6">
+        <p>User doesn&lsquo;t exist...</p>
+
+        <Link
+          href={"/"}
+          className="underline decoration-transparent hover:decoration-white transition-all duration-300 ease-in-out"
+        >
+          Return to homepage
+        </Link>
+      </div>
     );
   }
 
@@ -53,17 +61,13 @@ export default async function Page({ params }) {
     }
   } else {
     // top 5 starred repos
-    repoTitle = "Top 5 starred repositories :";
     if (userID) {
       repos = await starGetter(userID);
+      repoTitle = `Top ${repos.length} starred repositories :`;
     }
   }
 
   return (
-    <ProfileClient 
-      userData={userData} 
-      repos={repos} 
-      repoTitle={repoTitle} 
-    />
+    <ProfileClient userData={userData} repos={repos} repoTitle={repoTitle} />
   );
 }
