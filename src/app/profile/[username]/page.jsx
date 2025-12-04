@@ -4,6 +4,26 @@ import { starGetter, lastGetter } from "./repoGetter";
 import { Suspense } from "react";
 import React from "react";
 
+function RedirectSVG() {
+  return <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={16}
+                height={16}
+                fill="currentColor"
+                className="bi bi-box-arrow-up-right"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"
+                />
+                <path
+                  fillRule="evenodd"
+                  d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"
+                />
+              </svg>;
+}
+
 async function Repos({ repo_option, uID }) {
   const repoOption = repo_option;
   const user_id = uID;
@@ -28,39 +48,21 @@ async function Repos({ repo_option, uID }) {
     <ul>
       <h1 className="text-[22px] md:text-[26px]">{text}</h1>
       <br />
-      <hr />
       {repos.map((repo, index) => (
-        <div key={index}>
+        <div key={index} className=" md:bg-black md:mb-2 md:pl-3 md:pr-3 md:pt-1 md:rounded-2xl ">
           <p key={index}>
             <a
               href={repo[2]}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: "inline" }}
+              className="inline"
             >
               {repo[0]}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={16}
-                height={16}
-                fill="currentColor"
-                className="bi bi-box-arrow-up-right"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"
-                />
-                <path
-                  fillRule="evenodd"
-                  d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"
-                />
-              </svg>
+              <RedirectSVG></RedirectSVG>
             </a>
           </p>
           <p>{repo[1]}</p>
           <br></br>
-          <hr></hr>
         </div>
       ))}
     </ul>
@@ -135,7 +137,7 @@ export default async function Page({ params }) {
             {userData.username}
           </p>
           {userData.bio && (
-            <div className="text-lg max-w-md wrap-break-word">
+            <div className="text-lg max-w-md wrap-break-word break-all">
               <p>{userData.bio}</p>
             </div>
           )}
