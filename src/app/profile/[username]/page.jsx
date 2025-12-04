@@ -58,7 +58,14 @@ async function Repos({ repo_option, uID }) {
           rel="noopener noreferrer"
           className="inline h-full"
         >
-          <div className=" bg-black mb-2 pl-3 pr-3 pt-1 rounded-2xl ">
+          <div className=" bg-[#141616] mb-2 pl-3 pr-3 pt-1 rounded-2xl 
+          text-white border-[#a8afb5] border-solid border-2 
+          box-shadow:0_0_1px_#a8afb5] hover:[box-shadow:0_0_3px_#a8afb5] 
+          transition-all ease-in-out duration-150"
+          // bg-[#141616] mb-2 pl-3 pr-3 pt-1 rounded-2xl text-white border-[#a8afb5] border-solid border-2 box-shadow:0_0_1px_#a8afb5] hover:[box-shadow:0_0_3px_#a8afb5] transition-all ease-in-out duration-150 DARKMODE
+          // bg-[rgba(121,130,133,1)] mb-2 pl-3 pr-3 pt-1 rounded-2xl text-black border-[#141616] border-solid border-2 [box-shadow:0_0_1px_#141616] hover:[box-shadow:0_0_3px_#141616] transition-all ease-in-out duration-150 LIGHTMODE
+          
+          >
             <p key={index} className="inline-flex items-center gap-1">
               {repo[0]}
               <RedirectSVG></RedirectSVG>
