@@ -1,8 +1,6 @@
 "use client";
 import { Ring } from "ldrs/react";
 import "ldrs/react/Ring.css";
-import ThemeToggle from "@/lib/ThemeToggle";
-import { useState } from "react";
 
 export default function Loading() {
   const isDark = true;

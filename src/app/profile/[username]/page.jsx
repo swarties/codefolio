@@ -1,9 +1,6 @@
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
-import { starGetter, lastGetter } from "./repoGetter";
-import ProfileClient from "./ProfileClient";
-import { NoUser } from "./ProfileClient";
-import React from "react";
-import Link from "next/link";
+import ProfileClient, { NoUser } from "./ProfileClient";
+import { lastGetter, starGetter } from "./repoGetter";
 
 async function CheckUserandFetchData(username) {
   let dUE = false;
