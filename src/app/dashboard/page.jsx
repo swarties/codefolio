@@ -158,32 +158,52 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
           }}
         />
       </div>
-      <br />
-      <fieldset>
-        <legend>Displayed repositories</legend>
-        <label>
-          <input
-            type="radio"
-            name="repo_option"
-            value="last"
-            checked={formData.repo_option === "last"}
-            onChange={handleChange}
-          />
-          5 latest repositories
-        </label>
-        <br />
-        <label>
-          <input
-            type="radio"
-            name="repo_option"
-            value="star"
-            checked={formData.repo_option === "star"}
-            onChange={handleChange}
-          />
-          5 most starred repositories
-        </label>
+      {/* Repository Radio Btns */}
+      <fieldset className="pt-2">
+        <legend className={labelClasses}>Displayed repositories</legend>
+        <div className="flex flex-col gap-3 mt-1">
+          <label
+            className={`flex items-center gap-3 p-2 rounded-md border border-transparent hover:bg-white/5 cursor-pointer transition-colors ${
+              formData.repo_option === "last"
+                ? isDark
+                  ? "bg-white/10"
+                  : "bg-black/5"
+                : ""
+            }`}
+          >
+            <input
+              type="radio"
+              name="repo_option"
+              value="last"
+              checked={formData.repo_option === "last"}
+              onChange={handleChange}
+              className={`w-4 h-4`}
+              style={{
+                accentColor: formData.bgColor,
+              }}
+            />
+            <span className="text-sm">5 latest repositories</span>
+          </label>
+
+          <label className={`flex items-center gap-3 p-2 rounded-md border border-transparent hover:bg-white/5 cursor-pointer transition-colors ${
+             formData.repo_option === "star" ? (isDark ? "bg-white/10" : "bg-black/10") : ""
+          }`}>
+            <input
+              type="radio"
+              name="repo_option"
+              value="star"
+              checked={formData.repo_option === "star"}
+              onChange={handleChange}
+              className={`w-4 h-4`}
+              style={{
+                accentColor: formData.bgColor,
+              }}
+            />
+            <span className="text-sm">5 most starred repositories</span>
+          </label>
+        </div>
       </fieldset>
-      <br />
+      {/* Submit Button */}
       <button type="submit">Submit</button>
     </form>
   );
@@ -282,8 +302,8 @@ export default function Auth() {
   };
 
   const TextBG = {
-    dark: "bg-[#141616] text-white",
-    light: "bg-[#798285] text-black",
+    dark: "bg-[#2B2D2E] text-white",
+    light: "bg-[#C1C9CF] text-black",
   };
 
   const pageContent = (
