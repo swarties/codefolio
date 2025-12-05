@@ -7,6 +7,15 @@ import CheckSignedIn from "@/lib/checkSession";
 import SignOut from "@/lib/signOut";
 import userForm, { initData } from "./userForm";
 import ThemeToggle from "@/lib/ThemeToggle";
+import { Suspense } from "react";
+import Loading from "./loading";
+import Image from "next/image";
+
+async function GetUData() {
+  const data = await initData();
+
+  return data;
+}
 
 function ProfileForm() {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +31,7 @@ function ProfileForm() {
 
     const fetchData = async () => {
       try {
-        const data = await initData();
+        const data = await GetUData();
         // console.log("Fetched data:", data);
 
         if (data) {
@@ -115,42 +124,55 @@ function ProfileForm() {
   );
 }
 
-function UserAndImage() {
+function useUserData() {
   const [isLoading, setIsLoading] = useState(true);
-  const [hasFetched, setHasFetched] = useState(false);
-  const [uData, setUData] = useState({
+  const [userData, setUserData] = useState({
     username: "username",
     avatar_url: "",
   });
 
   useEffect(() => {
-    if (hasFetched) return;
-
     const fetchData = async () => {
       try {
-        const data = await initData();
-        // console.log("Fetched data:", data);
-
+        const data = await GetUData();
         if (data) {
-          setUData({
+          setUserData({
             username: data.username,
             avatar_url: data.avatar_url,
           });
         }
-        setHasFetched(true);
       } catch (error) {
         console.error("Error loading profile data", error);
       }
-
       setIsLoading(false);
     };
 
     fetchData();
-  }, [hasFetched]);
+  }, []);
 
+  return { userData, isLoading };
+}
+
+function UserAndImage({ userData, isLoading }) {
   if (isLoading) {
-    return <p>BLABLABLA</p>;
+    return <p>Loading...</p>;
   }
+
+  return (
+    <div className="flex flex-col items-center text-center md:text-center md:justify-center md:items-center">
+      <Image
+        src={userData.avatar_url}
+        alt="User Avatar"
+        width={200}
+        height={200}
+        className="mb-6 w-[100px] h-[100px] md:w-[200px] md:h-[200px] rounded-full border border-black bg-white object-cover"
+        sizes="(max-width: 768px) 100px, 200px"
+      />
+      <p className="text-[32px] md:text-[54px] font-bold mb-4">
+        {userData.username}
+      </p>
+    </div>
+  );
 }
 
 export default function Auth() {
@@ -161,6 +183,7 @@ export default function Auth() {
   }
 
   const [isDark, setIsDark] = useState(true);
+  const { userData, isLoading } = useUserData();
 
   const TextBG = {
     dark: "bg-black text-white",
@@ -172,6 +195,7 @@ export default function Auth() {
       className={` ${isDark ? " text-white bg-black " : " text-black bg-white"} h-full `}
     >
       <ThemeToggle isDark={isDark} toggleTheme={() => setIsDark(!isDark)} />
+      <UserAndImage userData={userData} isLoading={isLoading} />
       <Button
         variant="outline"
         onClick={SignUserOut}
@@ -179,9 +203,23 @@ export default function Auth() {
       >
         Log Out
       </Button>
+      <Button
+        variant="outline"
+        onClick={() => router.push(`/profile/${userData.username}`)}
+        disabled={isLoading}
+        className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max scale-125 hover:scale-[130%]  `}
+      >
+        Profile Page
+      </Button>
+      <Button
+        variant="outline"
+        onClick={()=> router.push("/")}
+        className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max scale-125 hover:scale-[130%]  `}
+      >
+        Go Home
+      </Button>
       <br />
       <br />
-      <a href="../">Go home</a>
       <ProfileForm></ProfileForm>
     </div>
   );
