@@ -185,9 +185,15 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
             <span className="text-sm">5 latest repositories</span>
           </label>
 
-          <label className={`flex items-center gap-3 p-2 rounded-md border border-transparent hover:bg-white/5 cursor-pointer transition-colors ${
-             formData.repo_option === "star" ? (isDark ? "bg-white/10" : "bg-black/10") : ""
-          }`}>
+          <label
+            className={`flex items-center gap-3 p-2 rounded-md border border-transparent hover:bg-white/5 cursor-pointer transition-colors ${
+              formData.repo_option === "star"
+                ? isDark
+                  ? "bg-white/10"
+                  : "bg-black/10"
+                : ""
+            }`}
+          >
             <input
               type="radio"
               name="repo_option"
@@ -204,7 +210,15 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
         </div>
       </fieldset>
       {/* Submit Button */}
-      <button type="submit">Submit</button>
+      <div className="pt-2">
+        <Button
+        variant="outline"
+          type="submit"
+          className={`w-full ${isDark ? "bg-[#2B2D2E] text-white border-gray-300" : "bg-[#C1C9CF] text-black hover:text-white hover:bg-[#2B2D2E] border-gray-800"} border-solid border `}
+        >
+          Save Profile
+        </Button>
+      </div>
     </form>
   );
 }
@@ -303,7 +317,7 @@ export default function Auth() {
 
   const TextBG = {
     dark: "bg-[#2B2D2E] text-white",
-    light: "bg-[#C1C9CF] text-black",
+    light: "bg-[#C1C9CF] text-black hover:bg-[#2B2D2E] hover:text-white",
   };
 
   const pageContent = (
