@@ -101,7 +101,7 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
     console.log("submit update was successful");
   };
 
-  const inputClasses = `w-full px-3 py-2 rounded-md border text-sm shadow-sm transition-colors focus:outline-none focus:ring-1 focus:ring-emerald-500 ${
+  const inputClasses = `w-full px-3 py-2 rounded-md border text-sm shadow-sm transition-colors focus:outline-none focus:ring-1 ${
     isDark
       ? "bg-[#141616] border-gray-600 text-white placeholder:text-gray-500"
       : "bg-white border-gray-300 text-black placeholder:text-gray-400"
@@ -110,14 +110,18 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
   const labelClasses = "block text-sm font-medium mb-1.5 ml-1 select-none";
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-md mx-auto md:mx-0">
-
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-6 w-full max-w-md mx-auto md:mx-0"
+    >
       {/* Color Picker */}
-            <div>
+      <div>
         <label htmlFor="bgColor" className={labelClasses}>
           Background Color
         </label>
-        <div className={`flex items-center gap-3 p-2 border rounded-md border-transparent transition-colors ${isDark ? "hover:bg-white/5" : "hover:bg-black/5" }`}>
+        <div
+          className={`flex items-center gap-3 p-2 border rounded-md border-transparent transition-colors ${isDark ? "hover:bg-white/5" : "hover:bg-black/5"}`}
+        >
           <div className="relative w-10 h-10 rounded-full overflow-hidden border border-gray-500 shadow-sm shrink-0">
             <input
               type="color"
@@ -128,21 +132,27 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] p-0 border-0 cursor-pointer"
             />
           </div>
-          <span className={`text-sm font-mono ${isDark ? "text-gray-300" : "text-gray-600"} select-none `}>
+          <span
+            className={`text-sm font-mono ${isDark ? "text-gray-300" : "text-gray-600"} select-none `}
+          >
             {formData.bgColor}
           </span>
         </div>
       </div>
-
-      <label htmlFor="bio">Bio</label>
-      <br />
-      <input
-        type="text"
-        name="bio"
-        id="bio"
-        value={formData.bio}
-        onChange={handleChange}
-      />
+      {/* Bio Input */}
+      <div>
+        <label htmlFor="bio" className={labelClasses}>Bio</label>
+        <br />
+        <input
+          type="text"
+          name="bio"
+          id="bio"
+          value={formData.bio}
+          onChange={handleChange}
+          className={inputClasses}
+          style={{ '--tw-ring-color': formData.bgColor }}
+        />
+      </div>
       <br />
       <fieldset>
         <legend>Displayed repositories</legend>
