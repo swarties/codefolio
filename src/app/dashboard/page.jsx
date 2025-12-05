@@ -7,50 +7,20 @@ import CheckSignedIn from "@/lib/checkSession";
 import SignOut from "@/lib/signOut";
 import userForm, { initData } from "./userForm";
 import ThemeToggle from "@/lib/ThemeToggle";
-import { Suspense } from "react";
 import Loading from "./loading";
 import Image from "next/image";
 
 async function GetUData() {
   const data = await initData();
-
   return data;
 }
 
-function ProfileForm() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasFetched, setHasFetched] = useState(false);
+function ProfileForm({ initialData, isDark }) {
   const [formData, setFormData] = useState({
-    bgColor: "#363636",
-    bio: "",
-    repo_option: "last",
+    bgColor: initialData.bg_color || "#363636",
+    bio: initialData.bio || "",
+    repo_option: initialData.repo_option ?  "last" : "star",
   });
-
-  useEffect(() => {
-    if (hasFetched) return;
-
-    const fetchData = async () => {
-      try {
-        const data = await GetUData();
-        // console.log("Fetched data:", data);
-
-        if (data) {
-          setFormData({
-            bgColor: data.bg_color || "#363636",
-            bio: data.bio || "",
-            repo_option: data.repo_option ? "last" : "star",
-          });
-        }
-        setHasFetched(true);
-      } catch (error) {
-        console.error("Error loading profile data", error);
-      }
-
-      setIsLoading(false);
-    };
-
-    fetchData();
-  }, [hasFetched]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -66,10 +36,6 @@ function ProfileForm() {
     await userForm(formDataObj);
     console.log("submit update was successful");
   };
-
-  if (isLoading) {
-    return <p>Form is loading...</p>;
-  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -124,44 +90,7 @@ function ProfileForm() {
   );
 }
 
-function useUserData() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [userData, setUserData] = useState({
-    username: "username",
-    avatar_url: "",
-    bg_color: "#363636",
-    bio: "",
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await GetUData();
-        if (data) {
-          setUserData({
-            username: data.username,
-            avatar_url: data.avatar_url,
-            bg_color: data.bg_color,
-            bio: data.bio,
-          });
-        }
-      } catch (error) {
-        console.error("Error loading profile data", error);
-      }
-      setIsLoading(false);
-    };
-
-    fetchData();
-  }, []);
-
-  return { userData, isLoading };
-}
-
-function UserAndImage({ userData, isLoading }) {
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
+function UserAndImage({ userData }) {
   return (
     <div className="flex flex-col items-center text-center md:text-center md:justify-center md:items-center">
       <Image
@@ -186,13 +115,40 @@ function UserAndImage({ userData, isLoading }) {
 
 export default function Auth() {
   const router = useRouter();
+  const [isDark, setIsDark] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await GetUData();
+        if (data) {
+          setUserData({
+            username: data.username,
+            avatar_url: data.avatar_url,
+            bg_color: data. bg_color || "#363636",
+            bio: data. bio || "",
+            repo_option: data.repo_option,
+          });
+        }
+      } catch (error) {
+        console.error("Error loading profile data", error);
+      }
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
   function SignUserOut() {
     SignOut();
     router.push("../");
   }
 
-  const [isDark, setIsDark] = useState(true);
-  const { userData, isLoading } = useUserData();
+  if (isLoading || !userData) {
+    return <Loading />;
+  }
 
   const cardStyles = {
     dark: "bg-[linear-gradient(to_top,#232526,#2b2d2e)] rounded-md p-[2em] text-white border-[#a8afb5] border-solid border-2 [box-shadow:0_0_6px_#a8afb5] hover:[box-shadow:0_0_15px_#a8afb5] transition-all duration-300",
@@ -214,27 +170,25 @@ export default function Auth() {
     >
       <div
         className={`relative w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-start md:items-center ${
-          isDark ? cardStyles.dark : cardStyles.light
+          isDark ?  cardStyles.dark : cardStyles.light
         }`}
       >
-        {/* Log Out Button - Absolute positioned top-left */}
         <Button
           variant="outline"
           onClick={SignUserOut}
-          className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max absolute top-4 left-4 `}
+          className={`${isDark ? TextBG.dark : `${TextBG. light} border-black`} h-max absolute top-4 left-4 `}
         >
           Log Out
         </Button>
 
         <ThemeToggle isDark={isDark} toggleTheme={() => setIsDark(!isDark)} />
         <div className="mt-8 md:mt-0">
-          <UserAndImage userData={userData} isLoading={isLoading} />
+          <UserAndImage userData={userData} />
         </div>
         <div>
-          <ProfileForm></ProfileForm>
+          <ProfileForm initialData={userData} isDark={isDark} />
           <br />
           <br />
-          {/* Fixed button container for mobile */}
           <div className="flex flex-col gap-4 items-center md:flex-row md:justify-around">
             <Button
               variant="outline"
@@ -246,8 +200,7 @@ export default function Auth() {
             <Button
               variant="outline"
               onClick={() => router.push(`/profile/${userData.username}`)}
-              disabled={isLoading}
-              className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max w-full md:w-auto md:scale-125 md:hover:scale-[130%]`}
+              className={` ${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max w-full md:w-auto md:scale-125 md:hover:scale-[130%]`}
             >
               Profile Page
             </Button>
@@ -258,8 +211,6 @@ export default function Auth() {
   );
 
   return (
-    <>
-      <CheckSignedIn redirectTo="../authentication" pageContent={pageContent} />
-    </>
+    <CheckSignedIn redirectTo="../authentication" pageContent={pageContent} />
   );
 }
