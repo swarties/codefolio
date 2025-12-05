@@ -107,7 +107,7 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
       : "bg-white border-gray-300 text-black placeholder:text-gray-400"
   }`;
 
-  const labelClasses = "block text-sm font-medium mb-1.5 ml-1 select-none";
+  const labelClasses = "block text-sm font-medium mb-1 ml-1 select-none";
 
   return (
     <form
@@ -144,7 +144,6 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
         <label htmlFor="bio" className={labelClasses}>
           Bio
         </label>
-        <br />
         <input
           type="text"
           name="bio"
@@ -163,11 +162,12 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
         <legend className={labelClasses}>Displayed repositories</legend>
         <div className="flex flex-col gap-3 mt-1">
           <label
-            className={`flex items-center gap-3 p-2 rounded-md border border-transparent hover:bg-white/5 cursor-pointer transition-colors ${
-              formData.repo_option === "last"
+            className={`flex items-center gap-3 p-2 rounded-md border border-transparent cursor-pointer transition-colors ${
+              isDark ? "hover:bg-white/5" : "hover:bg-black/5"
+            } ${ formData.repo_option === "last"
                 ? isDark
                   ? "bg-white/10"
-                  : "bg-black/5"
+                  : "bg-black/10"
                 : ""
             }`}
           >
@@ -186,8 +186,9 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
           </label>
 
           <label
-            className={`flex items-center gap-3 p-2 rounded-md border border-transparent hover:bg-white/5 cursor-pointer transition-colors ${
-              formData.repo_option === "star"
+            className={`flex items-center gap-3 p-2 rounded-md border border-transparent cursor-pointer transition-colors ${
+              isDark ? "hover:bg-white/5" : "hover:bg-black/5"
+            } ${ formData.repo_option === "star"
                 ? isDark
                   ? "bg-white/10"
                   : "bg-black/10"
@@ -212,9 +213,13 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
       {/* Submit Button */}
       <div className="pt-2">
         <Button
-        variant="outline"
+          variant="outline"
           type="submit"
-          className={`w-full ${isDark ? "bg-[#2B2D2E] text-white border-gray-300" : "bg-[#C1C9CF] text-black hover:text-white hover:bg-[#2B2D2E] border-gray-800"} border-solid border `}
+          className={`w-full  border-solid border ${
+            isDark
+              ? "bg-[#2B2D2E] text-white border-gray-300"
+              : "bg-[#C1C9CF] text-black hover:text-white hover:bg-[#2B2D2E] border-gray-800"
+          }`}
         >
           Save Profile
         </Button>

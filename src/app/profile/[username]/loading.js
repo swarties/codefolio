@@ -5,7 +5,7 @@ import ThemeToggle from "@/lib/ThemeToggle";
 import { useState } from "react";
 
 export default function Loading() {
-  const [isDark, setIsDark] = useState(true);
+  const isDark = true;
 
   return (
     <div className={` ${isDark ? " text-white bg-black " : " text-black bg-white"} h-full `}>
@@ -14,7 +14,6 @@ export default function Loading() {
     >
       <Ring size="50" stroke="6" bgOpacity="0" speed="1" color="white" />
     </div>
-      <ThemeToggle isDark={isDark} toggleTheme={() => setIsDark(!isDark)} />
     </div>
   );
 }
