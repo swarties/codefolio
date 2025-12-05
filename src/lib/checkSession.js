@@ -3,6 +3,7 @@
 import { createClient } from "./supabase/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Loading from "@/app/dashboard/loading";
 
 export default function CheckSignedIn({
   redirectTo = "../app/authentication",
@@ -32,7 +33,7 @@ export default function CheckSignedIn({
   if (verifState) {
     return (
       <>
-        <p>Loading...</p>
+        <Loading />
       </>
     );
   }
