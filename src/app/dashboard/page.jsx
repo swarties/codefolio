@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import CheckSignedIn from "@/lib/checkSession";
+import { createClient } from "@/lib/supabase/client";
 import SignOut from "@/lib/signOut";
 import userForm, { initData } from "./userForm";
 import ThemeToggle from "@/lib/ThemeToggle";
@@ -141,7 +141,9 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
       </div>
       {/* Bio Input */}
       <div>
-        <label htmlFor="bio" className={labelClasses}>Bio</label>
+        <label htmlFor="bio" className={labelClasses}>
+          Bio
+        </label>
         <br />
         <input
           type="text"
@@ -150,7 +152,7 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
           value={formData.bio}
           onChange={handleChange}
           className={inputClasses}
-          style={{ '--tw-ring-color': formData.bgColor }}
+          style={{ "--tw-ring-color": formData.bgColor }}
         />
       </div>
       <br />
@@ -216,6 +218,17 @@ export default function Auth() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        router.push("/authentication");
+        return;
+      }
+
       try {
         const data = await GetUData();
         if (data) {
@@ -234,7 +247,7 @@ export default function Auth() {
     };
 
     fetchData();
-  }, []);
+  }, [router]);
 
   function SignUserOut() {
     SignOut();
@@ -326,7 +339,5 @@ export default function Auth() {
     </div>
   );
 
-  return (
-    <CheckSignedIn redirectTo="../authentication" pageContent={pageContent} />
-  );
+  return pageContent;
 }
