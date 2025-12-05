@@ -10,10 +10,22 @@ import ThemeToggle from "@/lib/ThemeToggle";
 import Loading from "./loading";
 import Image from "next/image";
 
+function SuccessSVG() {
+  return (
+    <svg
+      className="w-6 h-6 text-white fill-current"
+      viewBox="0 0 40 40"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M20 3.333C10.8 3.333 3.333 10.8 3.333 20c0 9.2 7.467 16.667 16.667 16.667 9.2 0 16.667-7.467 16.667-16.667C36.667 10.8 29.2 3.333 20 3.333zm-3.333 25L8.333 20l2.35-2.35 5.984 5.967 12.65-12.65 2.35 2.366-15 15z" />
+    </svg>
+  )
+}
+
 function SuccessToast({ show, isDark }) {
   return (
     <div
-      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ease-in-out ${
+      className={`fixed bottom-6 right-6 z-50 transition-all duration-500 ease-in-out ${
         show
           ? "translate-y-0 opacity-100"
           : "translate-y-full opacity-0 pointer-events-none"
@@ -21,17 +33,11 @@ function SuccessToast({ show, isDark }) {
     >
       <div
         className={`flex w-full max-w-sm overflow-hidden rounded-lg shadow-md ${
-          isDark ? "bg-gray-800" : "bg-white"
+          isDark ? "bg-[linear-gradient(to_top,#232526,#2b2d2e)]" : "bg-[linear-gradient(to_top,#cfd9df_0%,#e2ebf0_100%)]"
         }`}
       >
         <div className="flex items-center justify-center w-12 bg-emerald-500">
-          <svg
-            className="w-6 h-6 text-white fill-current"
-            viewBox="0 0 40 40"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M20 3.33331C10.8 3. 33331 3. 33337 10. 8 3.33337 20C3.33337 29.2 10. 8 36.6666 20 36.6666C29.2 36. 6666 36. 6667 29. 2 36.6667 20C36.6667 10.8 29. 2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
-          </svg>
+          <SuccessSVG />
         </div>
 
         <div className="px-4 py-2 -mx-3">
@@ -62,7 +68,7 @@ async function GetUData() {
   return data;
 }
 
-function ProfileForm({ initialData, isDark, onUpdate }) {
+function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
   const [formData, setFormData] = useState({
     bgColor: initialData.bg_color || "#363636",
     bio: initialData.bio || "",
@@ -87,6 +93,8 @@ function ProfileForm({ initialData, isDark, onUpdate }) {
       bg_color: formData.bgColor,
       repo_option: formData.repo_option,
     });
+
+    onSuccess();
 
     console.log("submit update was successful");
   };
@@ -172,6 +180,7 @@ export default function Auth() {
   const [isDark, setIsDark] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(null);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -207,6 +216,13 @@ export default function Auth() {
     }));
   };
 
+  const handleShowToast = () => {
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 3000);
+  };
+
   if (isLoading || !userData) {
     return <Loading />;
   }
@@ -229,6 +245,8 @@ export default function Auth() {
         backgroundColor: userData.bg_color,
       }}
     >
+      <SuccessToast show={showToast} isDark={isDark} />
+
       <div
         className={`relative w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-start md:items-center ${
           isDark ? cardStyles.dark : cardStyles.light
@@ -251,6 +269,7 @@ export default function Auth() {
             initialData={userData}
             isDark={isDark}
             onUpdate={handleProfileUpdate}
+            onSuccess={handleShowToast}
           />
           <br />
           <br />
