@@ -107,20 +107,32 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
       : "bg-white border-gray-300 text-black placeholder:text-gray-400"
   }`;
 
-  const labelClasses = "block text-sm font-medium mb-1.5 ml-1";
+  const labelClasses = "block text-sm font-medium mb-1.5 ml-1 select-none";
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="bgColor">Background Color</label>
-      <br />
-      <input
-        type="color"
-        name="bgColor"
-        id="bgColor"
-        value={formData.bgColor}
-        onChange={handleChange}
-      />
-      <br />
+    <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-md mx-auto md:mx-0">
+
+      {/* Color Picker */}
+            <div>
+        <label htmlFor="bgColor" className={labelClasses}>
+          Background Color
+        </label>
+        <div className={`flex items-center gap-3 p-2 border rounded-md border-transparent transition-colors ${isDark ? "hover:bg-white/5" : "hover:bg-black/5" }`}>
+          <div className="relative w-10 h-10 rounded-full overflow-hidden border border-gray-500 shadow-sm shrink-0">
+            <input
+              type="color"
+              name="bgColor"
+              id="bgColor"
+              value={formData.bgColor}
+              onChange={handleChange}
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] p-0 border-0 cursor-pointer"
+            />
+          </div>
+          <span className={`text-sm font-mono ${isDark ? "text-gray-300" : "text-gray-600"} select-none `}>
+            {formData.bgColor}
+          </span>
+        </div>
+      </div>
 
       <label htmlFor="bio">Bio</label>
       <br />
