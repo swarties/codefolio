@@ -10,16 +10,63 @@ import ThemeToggle from "@/lib/ThemeToggle";
 import Loading from "./loading";
 import Image from "next/image";
 
+function SuccessToast({ show, isDark }) {
+  return (
+    <div
+      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ease-in-out ${
+        show
+          ? "translate-y-0 opacity-100"
+          : "translate-y-full opacity-0 pointer-events-none"
+      }`}
+    >
+      <div
+        className={`flex w-full max-w-sm overflow-hidden rounded-lg shadow-md ${
+          isDark ? "bg-gray-800" : "bg-white"
+        }`}
+      >
+        <div className="flex items-center justify-center w-12 bg-emerald-500">
+          <svg
+            className="w-6 h-6 text-white fill-current"
+            viewBox="0 0 40 40"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M20 3.33331C10.8 3. 33331 3. 33337 10. 8 3.33337 20C3.33337 29.2 10. 8 36.6666 20 36.6666C29.2 36. 6666 36. 6667 29. 2 36.6667 20C36.6667 10.8 29. 2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
+          </svg>
+        </div>
+
+        <div className="px-4 py-2 -mx-3">
+          <div className="mx-3">
+            <span
+              className={`font-semibold ${
+                isDark ? "text-emerald-400" : "text-emerald-500"
+              }`}
+            >
+              Success
+            </span>
+            <p
+              className={`text-sm ${
+                isDark ? "text-gray-200" : "text-gray-600"
+              }`}
+            >
+              Your profile was updated!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 async function GetUData() {
   const data = await initData();
   return data;
 }
 
-function ProfileForm({ initialData, isDark }) {
+function ProfileForm({ initialData, isDark, onUpdate }) {
   const [formData, setFormData] = useState({
     bgColor: initialData.bg_color || "#363636",
     bio: initialData.bio || "",
-    repo_option: initialData.repo_option ?  "last" : "star",
+    repo_option: initialData.repo_option ? "last" : "star",
   });
 
   const handleChange = (e) => {
@@ -34,6 +81,13 @@ function ProfileForm({ initialData, isDark }) {
     e.preventDefault();
     const formDataObj = new FormData(e.target);
     await userForm(formDataObj);
+
+    onUpdate({
+      bio: formData.bio,
+      bg_color: formData.bgColor,
+      repo_option: formData.repo_option,
+    });
+
     console.log("submit update was successful");
   };
 
@@ -127,8 +181,8 @@ export default function Auth() {
           setUserData({
             username: data.username,
             avatar_url: data.avatar_url,
-            bg_color: data. bg_color || "#363636",
-            bio: data. bio || "",
+            bg_color: data.bg_color || "#363636",
+            bio: data.bio || "",
             repo_option: data.repo_option,
           });
         }
@@ -145,6 +199,13 @@ export default function Auth() {
     SignOut();
     router.push("../");
   }
+
+  const handleProfileUpdate = (updatedFields) => {
+    setUserData((prev) => ({
+      ...prev,
+      ...updatedFields,
+    }));
+  };
 
   if (isLoading || !userData) {
     return <Loading />;
@@ -170,13 +231,13 @@ export default function Auth() {
     >
       <div
         className={`relative w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-start md:items-center ${
-          isDark ?  cardStyles.dark : cardStyles.light
+          isDark ? cardStyles.dark : cardStyles.light
         }`}
       >
         <Button
           variant="outline"
           onClick={SignUserOut}
-          className={`${isDark ? TextBG.dark : `${TextBG. light} border-black`} h-max absolute top-4 left-4 `}
+          className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max absolute top-4 left-4 `}
         >
           Log Out
         </Button>
@@ -186,7 +247,11 @@ export default function Auth() {
           <UserAndImage userData={userData} />
         </div>
         <div>
-          <ProfileForm initialData={userData} isDark={isDark} />
+          <ProfileForm
+            initialData={userData}
+            isDark={isDark}
+            onUpdate={handleProfileUpdate}
+          />
           <br />
           <br />
           <div className="flex flex-col gap-4 items-center md:flex-row md:justify-around">
