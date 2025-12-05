@@ -1,6 +1,7 @@
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import { starGetter, lastGetter } from "./repoGetter";
 import ProfileClient from "./ProfileClient";
+import { NoUser } from "./ProfileClient";
 import React from "react";
 import Link from "next/link";
 
@@ -33,16 +34,7 @@ export default async function Page({ params }) {
 
   if (!serverAns.dUE) {
     return (
-      <div className="flex flex-col h-full items-center justify-center bg-black text-white gap-6">
-        <p>User doesn&lsquo;t exist...</p>
-
-        <Link
-          href={"/"}
-          className="underline decoration-transparent hover:decoration-white transition-all duration-300 ease-in-out"
-        >
-          Return to homepage
-        </Link>
-      </div>
+      <NoUser />
     );
   }
 

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import ThemeToggle from "@/lib/ThemeToggle";
+import Link from "next/link";
 
 function RedirectSVG() {
   return (
@@ -26,18 +27,39 @@ function RedirectSVG() {
   );
 }
 
+export function NoUser() {
+  const [isDark, setIsDark] = useState(true);
+
+  return (
+    <div className={` ${ isDark ? " text-white bg-black " : " text-black bg-white" } flex flex-col h-full items-center justify-center gap-6`}>
+      <ThemeToggle isDark={isDark} toggleTheme={() => setIsDark(!isDark)} />
+
+      <p>User doesn&lsquo;t exist...</p>
+
+      <Link
+          href={"/"}
+          className={` ${ isDark ? " hover:decoration-white " : "hover:decoration-black" } gap-6 text-left underline decoration-transparent transition-all duration-300 ease-in-out`}
+        >
+          Return to homepage
+        </Link>
+    </div>
+  );
+}
+
 export default function ProfileClient({ userData, repos, repoTitle }) {
   const [isDark, setIsDark] = useState(true);
 
   // Styles definitions
   const cardStyles = {
     dark: "bg-[linear-gradient(to_top,#232526,#2b2d2e)] rounded-md p-[2em] text-white border-[#a8afb5] border-solid border-2 [box-shadow:0_0_6px_#a8afb5] hover:[box-shadow:0_0_15px_#a8afb5] transition-all duration-300",
-    light: "bg-[linear-gradient(90deg,rgba(121,130,133,1)_0%,rgba(204,203,177,1)_100%)] rounded-lg p-[2em] text-black border-[#3f4042] border-solid border-2 [box-shadow:0_0_6px_#3f4042] hover:[box-shadow:0_0_15px_#3f4042] transition-all duration-300",
+    light:
+      "bg-[linear-gradient(90deg,rgba(121,130,133,1)_0%,rgba(204,203,177,1)_100%)] rounded-lg p-[2em] text-black border-[#3f4042] border-solid border-2 [box-shadow:0_0_6px_#3f4042] hover:[box-shadow:0_0_15px_#3f4042] transition-all duration-300",
   };
 
   const repoStyles = {
     dark: "bg-[#141616] mb-2 pl-3 pr-3 pt-1 rounded-2xl text-white border-[#a8afb5] border-solid border-2 [box-shadow:0_0_1px_#a8afb5] hover:[box-shadow:0_0_3px_#a8afb5] transition-all ease-in-out duration-350",
-    light: "bg-[rgba(121,130,133,1)] mb-2 pl-3 pr-3 pt-1 rounded-2xl text-black border-[#141616] border-solid border-2 [box-shadow:0_0_1px_#141616] hover:[box-shadow:0_0_3px_#141616] transition-all ease-in-out duration-350",
+    light:
+      "bg-[rgba(121,130,133,1)] mb-2 pl-3 pr-3 pt-1 rounded-2xl text-black border-[#141616] border-solid border-2 [box-shadow:0_0_1px_#141616] hover:[box-shadow:0_0_3px_#141616] transition-all ease-in-out duration-350",
   };
 
   return (
@@ -86,9 +108,7 @@ export default function ProfileClient({ userData, repos, repoTitle }) {
               rel="noopener noreferrer"
               className="inline h-full"
             >
-              <div
-                className={isDark ? repoStyles.dark : repoStyles.light}
-              >
+              <div className={isDark ? repoStyles.dark : repoStyles.light}>
                 <p key={index} className="inline-flex items-center gap-1">
                   {repo[0]}
                   <RedirectSVG />
