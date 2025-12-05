@@ -101,7 +101,7 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
     console.log("submit update was successful");
   };
 
-  const inputClasses = `w-full px-3 py-2 rounded-md border text-sm shadow-sm transition-colors focus:outline-none focus:ring-1 ${
+  const inputClasses = `w-full px-3 py-2 rounded-md border text-sm shadow-sm transition duration-75 ease-in-out focus:outline-none focus:ring focus:ring-2 ${
     isDark
       ? "bg-[#141616] border-gray-600 text-white placeholder:text-gray-500"
       : "bg-white border-gray-300 text-black placeholder:text-gray-400"
@@ -152,7 +152,10 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
           value={formData.bio}
           onChange={handleChange}
           className={inputClasses}
-          style={{ "--tw-ring-color": formData.bgColor }}
+          style={{
+            "--tw-ring-color": formData.bgColor,
+            "--tw-ring-opacity": 1,
+          }}
         />
       </div>
       <br />
