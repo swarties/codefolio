@@ -176,10 +176,10 @@ function UserAndImage({ userData, isLoading }) {
         {userData.username}
       </p>
       {userData.bio && (
-            <div className="text-lg max-w-md wrap-break-word break-all">
-              <p>{userData.bio}</p>
-            </div>
-          )}
+        <div className="text-lg max-w-md wrap-break-word break-all">
+          <p>{userData.bio}</p>
+        </div>
+      )}
     </div>
   );
 }
@@ -213,44 +213,46 @@ export default function Auth() {
       }}
     >
       <div
-        className={`w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-start md:items-center ${
+        className={`relative w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-start md:items-center ${
           isDark ? cardStyles.dark : cardStyles.light
         }`}
       >
+        {/* Log Out Button - Absolute positioned top-left */}
+        <Button
+          variant="outline"
+          onClick={SignUserOut}
+          className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max absolute top-4 left-4 `}
+        >
+          Log Out
+        </Button>
+
         <ThemeToggle isDark={isDark} toggleTheme={() => setIsDark(!isDark)} />
-        <div>
+        <div className="mt-8 md:mt-0">
           <UserAndImage userData={userData} isLoading={isLoading} />
         </div>
         <div>
           <ProfileForm></ProfileForm>
-        <br />
-        <br />
-        <div className="flex flex-row items-center justify-around">
-          <Button
-            variant="outline"
-            onClick={SignUserOut}
-            className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max scale-125 hover:scale-[130%]  `}
-          >
-            Log Out
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => router.push(`/profile/${userData.username}`)}
-            disabled={isLoading}
-            className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max scale-125 hover:scale-[130%]  `}
-          >
-            Profile Page
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => router.push("/")}
-            className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max scale-125 hover:scale-[130%]  `}
-          >
-            Go Home
-          </Button>
+          <br />
+          <br />
+          {/* Fixed button container for mobile */}
+          <div className="flex flex-col gap-4 items-center md:flex-row md:justify-around">
+            <Button
+              variant="outline"
+              onClick={() => router.push(`/profile/${userData.username}`)}
+              disabled={isLoading}
+              className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max w-full md:w-auto md:scale-125 md:hover:scale-[130%]`}
+            >
+              Profile Page
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => router.push("/")}
+              className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max w-full md:w-auto md:scale-125 md:hover:scale-[130%]`}
+            >
+              Go Home
+            </Button>
+          </div>
         </div>
-        </div>
-
       </div>
     </div>
   );
