@@ -238,18 +238,18 @@ export default function Auth() {
           <div className="flex flex-col gap-4 items-center md:flex-row md:justify-around">
             <Button
               variant="outline"
+              onClick={() => router.push("/")}
+              className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max w-full md:w-auto md:scale-125 md:hover:scale-[130%]`}
+            >
+              Go Home
+            </Button>
+            <Button
+              variant="outline"
               onClick={() => router.push(`/profile/${userData.username}`)}
               disabled={isLoading}
               className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max w-full md:w-auto md:scale-125 md:hover:scale-[130%]`}
             >
               Profile Page
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => router.push("/")}
-              className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max w-full md:w-auto md:scale-125 md:hover:scale-[130%]`}
-            >
-              Go Home
             </Button>
           </div>
         </div>
