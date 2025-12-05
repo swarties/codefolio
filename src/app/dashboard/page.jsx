@@ -19,7 +19,7 @@ function SuccessSVG() {
     >
       <path d="M20 3.333C10.8 3.333 3.333 10.8 3.333 20c0 9.2 7.467 16.667 16.667 16.667 9.2 0 16.667-7.467 16.667-16.667C36.667 10.8 29.2 3.333 20 3.333zm-3.333 25L8.333 20l2.35-2.35 5.984 5.967 12.65-12.65 2.35 2.366-15 15z" />
     </svg>
-  )
+  );
 }
 
 function SuccessToast({ show, isDark }) {
@@ -33,7 +33,9 @@ function SuccessToast({ show, isDark }) {
     >
       <div
         className={`flex w-full max-w-sm overflow-hidden rounded-lg shadow-md ${
-          isDark ? "bg-[linear-gradient(to_top,#232526,#2b2d2e)]" : "bg-[linear-gradient(to_top,#cfd9df_0%,#e2ebf0_100%)]"
+          isDark
+            ? "bg-[linear-gradient(to_top,#232526,#2b2d2e)]"
+            : "bg-[linear-gradient(to_top,#cfd9df_0%,#e2ebf0_100%)]"
         }`}
       >
         <div className="flex items-center justify-center w-12 bg-emerald-500">
@@ -98,6 +100,14 @@ function ProfileForm({ initialData, isDark, onUpdate, onSuccess }) {
 
     console.log("submit update was successful");
   };
+
+  const inputClasses = `w-full px-3 py-2 rounded-md border text-sm shadow-sm transition-colors focus:outline-none focus:ring-1 focus:ring-emerald-500 ${
+    isDark
+      ? "bg-[#141616] border-gray-600 text-white placeholder:text-gray-500"
+      : "bg-white border-gray-300 text-black placeholder:text-gray-400"
+  }`;
+
+  const labelClasses = "block text-sm font-medium mb-1.5 ml-1";
 
   return (
     <form onSubmit={handleSubmit}>
