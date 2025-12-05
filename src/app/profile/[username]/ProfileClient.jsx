@@ -53,7 +53,7 @@ export default function ProfileClient({ userData, repos, repoTitle }) {
   const cardStyles = {
     dark: "bg-[linear-gradient(to_top,#232526,#2b2d2e)] rounded-md p-[2em] text-white border-[#a8afb5] border-solid border-2 [box-shadow:0_0_6px_#a8afb5] hover:[box-shadow:0_0_15px_#a8afb5] transition-all duration-300",
     light:
-      "bg-[linear-gradient(90deg,rgba(121,130,133,1)_0%,rgba(204,203,177,1)_100%)] rounded-lg p-[2em] text-black border-[#3f4042] border-solid border-2 [box-shadow:0_0_6px_#3f4042] hover:[box-shadow:0_0_15px_#3f4042] transition-all duration-300",
+      "bg-[linear-gradient(to_top,#cfd9df_0%,#e2ebf0_100%)] rounded-lg p-[2em] text-black border-[#3f4042] border-solid border-2 [box-shadow:0_0_6px_#3f4042] hover:[box-shadow:0_0_15px_#3f4042] transition-all duration-300",
   };
 
   const repoStyles = {

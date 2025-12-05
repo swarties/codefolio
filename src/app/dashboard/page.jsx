@@ -129,6 +129,8 @@ function useUserData() {
   const [userData, setUserData] = useState({
     username: "username",
     avatar_url: "",
+    bg_color: "#363636",
+    bio: "",
   });
 
   useEffect(() => {
@@ -139,6 +141,8 @@ function useUserData() {
           setUserData({
             username: data.username,
             avatar_url: data.avatar_url,
+            bg_color: data.bg_color,
+            bio: data.bio,
           });
         }
       } catch (error) {
@@ -171,6 +175,11 @@ function UserAndImage({ userData, isLoading }) {
       <p className="text-[32px] md:text-[54px] font-bold mb-4">
         {userData.username}
       </p>
+      {userData.bio && (
+            <div className="text-lg max-w-md wrap-break-word break-all">
+              <p>{userData.bio}</p>
+            </div>
+          )}
     </div>
   );
 }
@@ -185,42 +194,64 @@ export default function Auth() {
   const [isDark, setIsDark] = useState(true);
   const { userData, isLoading } = useUserData();
 
+  const cardStyles = {
+    dark: "bg-[linear-gradient(to_top,#232526,#2b2d2e)] rounded-md p-[2em] text-white border-[#a8afb5] border-solid border-2 [box-shadow:0_0_6px_#a8afb5] hover:[box-shadow:0_0_15px_#a8afb5] transition-all duration-300",
+    light:
+      "bg-[linear-gradient(to_top,#cfd9df_0%,#e2ebf0_100%)] rounded-lg p-[2em] text-black border-[#3f4042] border-solid border-2 [box-shadow:0_0_6px_#3f4042] hover:[box-shadow:0_0_15px_#3f4042] transition-all duration-300",
+  };
+
   const TextBG = {
-    dark: "bg-black text-white",
-    light: "bg-white text-black",
+    dark: "bg-[#141616] text-white",
+    light: "bg-[#798285] text-black",
   };
 
   const pageContent = (
     <div
-      className={` ${isDark ? " text-white bg-black " : " text-black bg-white"} h-full `}
+      className="min-h-screen flex items-center justify-center p-8"
+      style={{
+        backgroundColor: userData.bg_color,
+      }}
     >
-      <ThemeToggle isDark={isDark} toggleTheme={() => setIsDark(!isDark)} />
-      <UserAndImage userData={userData} isLoading={isLoading} />
-      <Button
-        variant="outline"
-        onClick={SignUserOut}
-        className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max scale-125 hover:scale-[130%]  `}
+      <div
+        className={`w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-start md:items-center ${
+          isDark ? cardStyles.dark : cardStyles.light
+        }`}
       >
-        Log Out
-      </Button>
-      <Button
-        variant="outline"
-        onClick={() => router.push(`/profile/${userData.username}`)}
-        disabled={isLoading}
-        className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max scale-125 hover:scale-[130%]  `}
-      >
-        Profile Page
-      </Button>
-      <Button
-        variant="outline"
-        onClick={()=> router.push("/")}
-        className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max scale-125 hover:scale-[130%]  `}
-      >
-        Go Home
-      </Button>
-      <br />
-      <br />
-      <ProfileForm></ProfileForm>
+        <ThemeToggle isDark={isDark} toggleTheme={() => setIsDark(!isDark)} />
+        <div>
+          <UserAndImage userData={userData} isLoading={isLoading} />
+        </div>
+        <div>
+          <ProfileForm></ProfileForm>
+        <br />
+        <br />
+        <div className="flex flex-row items-center justify-around">
+          <Button
+            variant="outline"
+            onClick={SignUserOut}
+            className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max scale-125 hover:scale-[130%]  `}
+          >
+            Log Out
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => router.push(`/profile/${userData.username}`)}
+            disabled={isLoading}
+            className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max scale-125 hover:scale-[130%]  `}
+          >
+            Profile Page
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => router.push("/")}
+            className={`${isDark ? TextBG.dark : `${TextBG.light} border-black`} h-max scale-125 hover:scale-[130%]  `}
+          >
+            Go Home
+          </Button>
+        </div>
+        </div>
+
+      </div>
     </div>
   );
 
