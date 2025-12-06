@@ -6,7 +6,7 @@ const defaultHeaders = {
   Accept: "application/vnd.github+json",
 };
 
-var charSplit = 30;
+var charSplit = 50;
 
 export async function lastGetter(userid) {
   const reqURL = `${githubApi}user/${userid}/repos?per_page=5&sort=updated/`;
