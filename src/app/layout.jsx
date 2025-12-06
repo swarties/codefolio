@@ -10,7 +10,7 @@ export const metadata = {
     siteName: 'Codefolio',
     images: [
       {
-        url: './open_graph.png', // Must be an absolute URL
+        url: './opengraph-image.png', // Must be an absolute URL
         width: 720,
         height: 378,
         alt: 'Homepage Render',
