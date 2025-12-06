@@ -5,25 +5,6 @@ import { useState } from "react";
 import ThemeToggle from "@/lib/ThemeToggle";
 import { Button } from "@/components/ui/button";
 
-export const metadata = {
-  title: 'Codefolio — GitHub Portfolio',
-  description: 'A clean and minimalistic platform where developers can showcase their work. Link your GitHub account, generate a profile page, and share your code with the world.',
-  openGraph: {
-    title: 'Codefolio — GitHub Portfolio',
-    description: 'A clean and minimalistic platform where developers can showcase their work. Link your GitHub account, generate a profile page, and share your code with the world.',
-    url: 'https://codefolio.app',
-    siteName: 'My Website',
-    images: [
-      {
-        url: './open_graph.png', // Must be an absolute URL
-        width: 720,
-        height: 378,
-        alt: 'Homepage Render',
-      },
-    ],
-    type: 'website',
-  },
-};
 
 function Dot({ isDark }) {
   return (
