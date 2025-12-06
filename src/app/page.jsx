@@ -106,6 +106,8 @@ export default function Home() {
             <Link
               href="https://github.com/"
               className="relative inline-block group"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <span className=" inline text-transparent bg-clip-text bg-linear-to-r from-violet-700 to-violet-800">
                 GitHub <RedirectSVG />
@@ -136,6 +138,56 @@ export default function Home() {
                 Go to Dashboard
               </Button>
             </Link>
+          </div>
+        </div>
+        {/* Feature Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24 max-w-5xl w-full text-left">
+          <div
+            className={`group p-6 rounded-2xl border ${borderClass} backdrop-blur-sm bg-opacity-5`}
+          >
+            <div
+              className={`select-none w-12 h-12 rounded-full flex items-center justify-center mb-4 text-xl font-bold ${isDark ? "bg-white text-black" : "bg-black text-white"}`}
+            >
+              1
+            </div>
+            <h3 className="text-xl font-bold mb-2">Log in with GitHub</h3>
+            <p className={subTextClass}>
+              One-click login integration that instantly fetches your identity
+              and repositories.
+            </p>
+          </div>
+
+          <div
+            className={`group p-6 rounded-2xl border ${borderClass} backdrop-blur-sm bg-opacity-5`}
+          >
+            <div
+              className={`select-none w-12 h-12 rounded-full flex items-center justify-center mb-4 text-xl font-bold ${isDark ? "bg-white text-black" : "bg-black text-white"}`}
+            >
+              2
+            </div>
+            <h3 className="text-xl font-bold mb-2">Customize</h3>
+            <p className={subTextClass}>
+              Personalize your bio, background color, and choose which
+              repositories to display.
+            </p>
+          </div>
+
+          <div
+            className={`group p-6 rounded-2xl border ${borderClass} backdrop-blur-sm bg-opacity-5`}
+          >
+            <div
+              className={`select-none w-12 h-12 rounded-full flex items-center justify-center mb-4 text-xl font-bold ${isDark ? "bg-white text-black" : "bg-black text-white"}`}
+            >
+              3
+            </div>
+            <h3 className="text-xl font-bold mb-2">Share</h3>
+            <p className={subTextClass}>
+              Get a clean{" "}
+              <span className="font-mono bg-gray-500/20 px-1 rounded">
+                /profile/username
+              </span>{" "}
+              link to share on your socials or resume.
+            </p>
           </div>
         </div>
       </main>
