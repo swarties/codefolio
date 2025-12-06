@@ -55,6 +55,13 @@ export default function Home() {
           </Link>
         </div>
       </nav>
+      {/* Footer */}
+      <footer className={`py-4 border-t ${borderClass} text-center`}>
+        <p className={`text-sm ${subTextClass}`}>
+          © {new Date().getFullYear()} Codefolio. Built with Next.js &
+          Tailwind.
+        </p>
+      </footer>
     </div>
   );
 }
