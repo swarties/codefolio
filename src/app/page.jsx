@@ -58,7 +58,7 @@ export default function Home() {
     >
       {/* Navigation */}
       <nav
-        className={`w-full p-6 flex items-center justify-between border-b ${borderClass}`}
+        className={`w-full p-6 flex flex-wrap items-center justify-between border-b ${borderClass}`}
       >
         <div className="text-xl font-bold tracking-tighter flex items-center gap-2 select-none">
           <Dot isDark={isDark} />
@@ -68,19 +68,19 @@ export default function Home() {
         </div>
 
         <ThemeToggle isDark={isDark} toggleTheme={() => setIsDark(!isDark)} />
-        <div className="group flex items-center gap-4">
-          <Link href="/authentication">
+        <div className="group flex items-center gap-4 w-full mt-4 sm:w-auto sm:mt-0">
+          <Link href="/authentication" className="flex-1 sm:flex-none">
             <Button
               variant="outline"
-              className={`${isDark ? "bg-black text-white hover:bg-white hover:text-black" : "bg-white text-black hover:bg-black hover:text-white"} border font-medium`}
+              className={`w-full sm:w-auto ${isDark ? "bg-black text-white hover:bg-white hover:text-black" : "bg-white text-black hover:bg-black hover:text-white"} border font-medium`}
             >
               Log In
             </Button>
           </Link>
-          <Link href="/dashboard">
+          <Link href="/dashboard" className="flex-1 sm:flex-none">
             <Button
               variant="outline"
-              className={`${isDark ? "bg-white text-black group-hover:bg-black group-hover:text-white" : "bg-black text-white hover:bg-black hover:text-white group-hover:bg-white group-hover:text-black"} border font-medium `}
+              className={`w-full sm:w-auto ${isDark ? "bg-white text-black group-hover:bg-black group-hover:text-white" : "bg-black text-white hover:bg-black hover:text-white group-hover:bg-white group-hover:text-black"} border font-medium `}
             >
               Dashboard
             </Button>
