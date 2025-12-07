@@ -77,7 +77,7 @@ export default function ProfileClient({ userData, repos, repoTitle }) {
         className={`w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-start md:items-center ${
           isDark ? cardStyles.dark : cardStyles.light
         }`}
-        style={{ gridTemplateColumns: "repeat(1, minmax(0, 1fr))" }}
+        style={{ gridTemplateColumns: repoTitle === null ? "repeat(1, minmax(0, 1fr))" : "" }}
       >
         {/* Left Column: Profile Info */}
         <div className="flex flex-col items-center text-center md:text-center md:justify-center md:items-center">
