@@ -30,9 +30,7 @@ export default async function Page({ params }) {
   const userID = serverData.github_id;
 
   if (!serverAns.dUE) {
-    return (
-      <NoUser />
-    );
+    return <NoUser />;
   }
 
   const userData = serverAns.data[0];
@@ -44,9 +42,9 @@ export default async function Page({ params }) {
 
   if (repoOption) {
     // latest 5 repos
-    repoTitle = "Top 5 latest repositories :";
     if (userID) {
       repos = await lastGetter(userID);
+      repoTitle = `Top ${repos.length} latest repositories :`;
     }
   } else {
     // top 5 starred repos
@@ -54,6 +52,9 @@ export default async function Page({ params }) {
       repos = await starGetter(userID);
       repoTitle = `Top ${repos.length} starred repositories :`;
     }
+  }
+  if (repos.length === 0) {
+    repoTitle = null;
   }
 
   return (

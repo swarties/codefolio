@@ -12,7 +12,7 @@ function RedirectSVG() {
       width={16}
       height={16}
       fill="currentColor"
-      className="bi bi-box-arrow-up-right inline"
+      className="bi bi-box-arrow-up-right inline sm:-translate-y-0.5 md:-translate-y-0.75"
       viewBox="0 0 16 16"
     >
       <path
@@ -31,17 +31,19 @@ export function NoUser() {
   const [isDark, setIsDark] = useState(true);
 
   return (
-    <div className={` ${ isDark ? " text-white bg-black " : " text-black bg-white" } flex flex-col h-full items-center justify-center gap-6`}>
+    <div
+      className={` ${isDark ? " text-white bg-black " : " text-black bg-white"} flex flex-col h-full items-center justify-center gap-6`}
+    >
       <ThemeToggle isDark={isDark} toggleTheme={() => setIsDark(!isDark)} />
 
       <p>User doesn&lsquo;t exist...</p>
 
       <Link
-          href={"/"}
-          className={` ${ isDark ? " hover:decoration-white " : "hover:decoration-black" } gap-6 text-left underline decoration-transparent transition-all duration-300 ease-in-out`}
-        >
-          Return to homepage
-        </Link>
+        href={"/"}
+        className={` ${isDark ? " hover:decoration-white " : "hover:decoration-black"} gap-6 text-left underline decoration-transparent transition-all duration-300 ease-in-out`}
+      >
+        Return to homepage
+      </Link>
     </div>
   );
 }
@@ -75,6 +77,7 @@ export default function ProfileClient({ userData, repos, repoTitle }) {
         className={`w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 items-start md:items-center ${
           isDark ? cardStyles.dark : cardStyles.light
         }`}
+        style={{ gridTemplateColumns: "repeat(1, minmax(0, 1fr))" }}
       >
         {/* Left Column: Profile Info */}
         <div className="flex flex-col items-center text-center md:text-center md:justify-center md:items-center">
@@ -98,7 +101,9 @@ export default function ProfileClient({ userData, repos, repoTitle }) {
 
         {/* Right Column: Repositories */}
         <div className="w-full">
-          <h1 className="text-[22px] md:text-[26px]">{repoTitle}</h1>
+          <h1 className="text-[22px] md:text-[26px] select-none">
+            {repoTitle}
+          </h1>
           <br />
           {repos.map((repo, index) => (
             <a
